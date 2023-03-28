@@ -1,0 +1,15 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
+
+  button {
+    font-weight: 500;
+
+    padding: 12px 34px;
+    background: var(--link);
+    border-radius: 8px;
+  }
+}

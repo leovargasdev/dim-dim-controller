@@ -4,21 +4,16 @@
   box-sizing: border-box;
 }
 
-html {
-  @media (max-width: 1080px) {
-    font-size: 93.75%; // 15px
-  }
-
-  @media (max-width: 720px) {
-    font-size: 87.5%; // 14px
-  }
-}
-
 :root {
-  --background: #f5f6fa;
+  --background:  #16171B;
+  --background-secondary:  #1F2326;
 
-  --primary: #373D4F;
-  --secondary: #9098AE;
+  --primary: #F5F5F5;
+  --secondary: #909090;
+
+  --link: #1C60CA;
+  --success: #0F8E53;
+  --cancel : #A62C34;
 }
 
 body {
@@ -27,7 +22,11 @@ body {
 
 body, button, textarea, input {
   color: var(--primary);
-  font: 400 1rem "Roboto", sans-serif;
+  font: 400 1rem "Poppins", sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6, strong, b, button {
+  font-weight: 600;
 }
 
 a {

@@ -1,0 +1,47 @@
+.box {
+  // margin-top: 84px;
+
+  width: 100%;
+  border-radius: 10px;
+  padding: 32px;
+  background: var(--background-secondary);
+
+  display: flex;
+  flex-direction: column;
+  row-gap: 32px;
+
+  h1 {
+    font-size: 1.5rem;
+  }
+}
+
+.table {
+  text-align: left;
+
+  border-spacing: 0 1rem;
+
+  thead {
+    tr th {
+      font-size: 1.125rem;
+      line-height: 1.875rem;
+      color: var(--secondary);
+    }
+
+    &:after {
+      content: "-";
+      display: block;
+      line-height: 0;
+      color: transparent;
+    }
+  }
+
+  tbody {
+    width: 100%;
+
+    tr:not(:last-child) td {
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+  }
+}
+
