@@ -1,7 +1,7 @@
 export const defaultValues = {
   name: '',
   date: new Date(),
-  type: 'entrada',
+  type: 'in',
   category: '',
-  value: 0
+  value: ''
 }

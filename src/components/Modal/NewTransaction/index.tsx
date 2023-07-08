@@ -8,6 +8,8 @@ import { Input } from 'components/Form'
 
 import styles from './styles.module.scss'
 import { zodTransactionSchema, defaultValues } from 'utils/transaction'
+import { SelectTransactionType } from './components/SelectTransactionType'
+import { SelectTransactionCategory } from './components/SelectTransactionCategory'
 
 export const ModalNewTransaction = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false)
@@ -27,12 +29,10 @@ export const ModalNewTransaction = () => {
       console.log(data)
     } finally {
       useFormMethods.reset()
-      setLoading(false)
-      setIsOpen(false)
+      setTimeout(() => setLoading(false), 3000)
+      // setIsOpen(false)
     }
   }
-
-  console.log(useFormMethods.formState.errors)
 
   return (
     <Dialog.Root onOpenChange={setIsOpen} open={isOpen}>
@@ -56,8 +56,10 @@ export const ModalNewTransaction = () => {
           </header>
 
           <FormProvider {...useFormMethods}>
-            <form>
+            <form onSubmit={useFormMethods.handleSubmit(onSubmit)}>
               <main className={`${styles.main} scroll`}>
+                <SelectTransactionType />
+
                 <Input
                   type="text"
                   label="Nome"
@@ -75,6 +77,8 @@ export const ModalNewTransaction = () => {
 
                   <Input type="date" label="Data" name="date" placeholder="" />
                 </div>
+
+                <SelectTransactionCategory />
               </main>
 
               <footer className={styles.footer}>
@@ -82,9 +86,8 @@ export const ModalNewTransaction = () => {
                   Cancelar
                 </Dialog.DialogClose>
                 <button
-                  type="button"
+                  type="submit"
                   disabled={loading}
-                  onClick={useFormMethods.handleSubmit(onSubmit)}
                   className={`button ${loading ? 'loading' : ''}`}
                 >
                   Salvar

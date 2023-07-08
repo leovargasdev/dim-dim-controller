@@ -15,7 +15,7 @@
   z-index: 3;
 
   width: 100%;
-  max-width: 632px;
+  max-width: 780px;
   border-radius: 8px;
   background: #282D30;
 }
@@ -61,7 +61,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     // align-items: flex-start;
-    column-gap: 32px;
+    column-gap: 16px;
   }
 }
 
