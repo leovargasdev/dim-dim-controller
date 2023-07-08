@@ -1,0 +1,10 @@
+.error {
+  display: flex;
+  align-items: center;
+  column-gap: 4px;
+
+  font-size: 0.875rem;
+  line-height: 1rem;
+  color: var(--error);
+  font-weight: 400;
+}

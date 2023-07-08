@@ -6,7 +6,7 @@ import styles from 'styles/home.module.scss'
 
 const HomePage: NextPage = () => (
   <div className={styles.container}>
-    {/* <Header /> */}
+    <Header />
 
     <Transactions />
   </div>

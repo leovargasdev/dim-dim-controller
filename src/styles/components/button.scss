@@ -1,0 +1,53 @@
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: 6px;
+
+  width: 100%;
+  padding: 10px 0;
+  border-radius: 6px;
+  padding: 12px 24px;
+  background: var(--link);
+  color: var(--primary);
+
+  font-size: 1rem;
+  font-weight: 500;
+
+  transition: all 0.4s;
+
+  &:disabled {
+    opacity: 0.6;
+  }
+}
+
+.loading {
+  position: relative;
+  color: transparent!important;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    display: block;
+    width: 24px;
+    height: 24px;
+    background: transparent;
+
+    border-radius: 50%;
+    border: 1px solid transparent;
+    border-left-color: #fff;
+
+    animation: rotation 1s linear infinite;
+    
+    @keyframes rotation {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+  }
+}

@@ -1,3 +1,6 @@
+@import './components/button.scss';
+@import './components/scroll.scss';
+
 * {
   margin: 0;
   padding: 0;
@@ -14,6 +17,8 @@
   --link: #1C60CA;
   --success: #0F8E53;
   --cancel : #A62C34;
+
+  --error: #e2414c;
 }
 
 body {
@@ -40,4 +45,8 @@ button {
   &:hover {
     cursor: pointer;
   }
+}
+
+fieldset {
+  border: 0;
 }

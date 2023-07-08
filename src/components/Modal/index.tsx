@@ -1,0 +1,1 @@
+export { ModalNewTransaction } from './NewTransaction'
