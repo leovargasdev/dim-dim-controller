@@ -12,6 +12,7 @@ import { SelectTransactionType } from './components/SelectTransactionType'
 import { SelectTransactionCategory } from './components/SelectTransactionCategory'
 
 import styles from './styles.module.scss'
+import api from 'service/api'
 
 export const ModalNewTransaction = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false)
@@ -29,6 +30,7 @@ export const ModalNewTransaction = () => {
 
     try {
       console.log(data)
+      await api.post('/transaction/create', data)
     } finally {
       useFormMethods.reset()
       setTimeout(() => setLoading(false), 3000)

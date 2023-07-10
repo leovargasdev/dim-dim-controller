@@ -1,3 +1,7 @@
+export const maskNumber = (value: string): number => {
+  return Number(value.replace(/(\D)/g, ''))
+}
+
 export const maskMoney = (data: string): string => {
   const size = data.length
   const value = data.replace(/(\D)/g, '')

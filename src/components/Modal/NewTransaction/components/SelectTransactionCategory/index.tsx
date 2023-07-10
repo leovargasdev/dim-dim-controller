@@ -1,5 +1,6 @@
 import {
   Books,
+  Briefcase,
   ChartLine,
   CirclesFour,
   CoatHanger,
@@ -39,6 +40,11 @@ const CATEGORIES = [
     name: 'Moradia',
     value: 'moradia',
     icon: <House size={24} weight="regular" />
+  },
+  {
+    name: 'Receita',
+    value: 'receita',
+    icon: <Briefcase size={24} weight="regular" />
   },
   {
     name: 'Saúde',
