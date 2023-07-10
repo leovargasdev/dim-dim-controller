@@ -29,12 +29,11 @@ export const ModalNewTransaction = () => {
     setLoading(true)
 
     try {
-      console.log(data)
       await api.post('/transaction/create', data)
     } finally {
       useFormMethods.reset()
       setTimeout(() => setLoading(false), 3000)
-      // setIsOpen(false)
+      setIsOpen(false)
     }
   }
 

@@ -1,6 +1,8 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import { maskNumber } from 'utils/mask'
+import { collection, addDoc } from 'firebase/firestore/lite'
 
+import firebase from 'service/firebase'
+import { maskNumber } from 'utils/mask'
 import { zodTransactionSchema } from 'utils/transaction'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
@@ -13,7 +15,11 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     name: data.name,
     category: data.category,
     date: data.date,
-    value
+    value,
+    created_at: new Date()
   }
+
+  await addDoc(collection(firebase, 'transactions'), transaction)
+
   return res.status(201).send('')
 }
