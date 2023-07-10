@@ -4,12 +4,14 @@ import * as Dialog from '@radix-ui/react-dialog'
 import { useForm, FormProvider } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 
+import { maskMoney } from 'utils/mask'
 import { Input } from 'components/Form'
-
-import styles from './styles.module.scss'
 import { zodTransactionSchema, defaultValues } from 'utils/transaction'
+
 import { SelectTransactionType } from './components/SelectTransactionType'
 import { SelectTransactionCategory } from './components/SelectTransactionCategory'
+
+import styles from './styles.module.scss'
 
 export const ModalNewTransaction = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false)
@@ -62,9 +64,9 @@ export const ModalNewTransaction = () => {
 
                 <Input
                   type="text"
-                  label="Nome"
                   name="name"
-                  placeholder="Nome da operação"
+                  label="Nome da transação"
+                  placeholder="Nome da transação"
                 />
 
                 <div className={styles.line}>
@@ -73,6 +75,8 @@ export const ModalNewTransaction = () => {
                     label="Valor"
                     name="value"
                     placeholder="R$ 0,00"
+                    maxLength={12}
+                    mask={maskMoney}
                   />
 
                   <Input type="date" label="Data" name="date" placeholder="" />
