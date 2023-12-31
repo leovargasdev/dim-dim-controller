@@ -4,15 +4,15 @@ import * as Dialog from '@radix-ui/react-dialog'
 import { useForm, FormProvider } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 
+import api from 'services/api'
 import { maskMoney } from 'utils/mask'
+
 import { Input } from 'components/Form'
+import { SelectType } from './components/SelectType'
+import { SelectCategory } from './components/SelectCategory'
 import { zodTransactionSchema, defaultValues } from 'utils/transaction'
 
-import { SelectTransactionType } from './components/SelectTransactionType'
-import { SelectTransactionCategory } from './components/SelectTransactionCategory'
-
 import styles from './styles.module.scss'
-import api from 'service/api'
 
 export const ModalNewTransaction = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false)
@@ -61,7 +61,7 @@ export const ModalNewTransaction = () => {
           <FormProvider {...useFormMethods}>
             <form onSubmit={useFormMethods.handleSubmit(onSubmit)}>
               <main className={`${styles.main} scroll`}>
-                <SelectTransactionType />
+                <SelectType />
 
                 <Input
                   type="text"
@@ -83,7 +83,7 @@ export const ModalNewTransaction = () => {
                   <Input type="date" label="Data" name="date" placeholder="" />
                 </div>
 
-                <SelectTransactionCategory />
+                <SelectCategory />
               </main>
 
               <footer className={styles.footer}>

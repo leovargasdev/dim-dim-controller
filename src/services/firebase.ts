@@ -11,6 +11,4 @@ const config = {
 }
 
 const app = initializeApp(config)
-const database = getFirestore(app)
-
-export default database
+export const db = getFirestore(app)

@@ -6,7 +6,7 @@ import { TransationType } from 'types/transation'
 import styles from './styles.module.scss'
 import { CaretDown, CaretUp } from '@phosphor-icons/react'
 
-export const SelectTransactionType = () => {
+export const SelectType = () => {
   const { control } = useFormContext()
   const { field, fieldState } = useController({ name: 'type', control })
 
