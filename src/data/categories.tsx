@@ -1,12 +1,17 @@
 import {
+  PawPrint,
+  Car,
   Books,
-  Briefcase,
+  Airplane,
   ChartLine,
   CirclesFour,
-  CoatHanger,
+  TShirt,
   FirstAidKit,
   ForkKnife,
+  User,
   GameController,
+  PaintRoller,
+  Television,
   House
 } from '@phosphor-icons/react'
 
@@ -15,6 +20,11 @@ export default [
     name: 'Alimentação',
     value: 'alimentacao',
     icon: <ForkKnife size={24} weight="regular" />
+  },
+  {
+    name: 'Assinaturas',
+    value: 'assinaturas',
+    icon: <Television size={24} weight="regular" />
   },
   {
     name: 'Educação',
@@ -37,9 +47,19 @@ export default [
     icon: <House size={24} weight="regular" />
   },
   {
-    name: 'Receita',
-    value: 'receita',
-    icon: <Briefcase size={24} weight="regular" />
+    name: 'Outros (gastos)',
+    value: 'outros',
+    icon: <CirclesFour size={24} weight="regular" />
+  },
+  {
+    name: 'Pessoal',
+    value: 'pessoal',
+    icon: <User size={24} weight="regular" />
+  },
+  {
+    name: 'Pet',
+    value: 'pet',
+    icon: <PawPrint size={24} weight="regular" />
   },
   {
     name: 'Saúde',
@@ -47,13 +67,23 @@ export default [
     icon: <FirstAidKit size={24} weight="regular" />
   },
   {
-    name: 'Vestuário',
-    value: 'vestuario',
-    icon: <CoatHanger size={24} weight="regular" />
+    name: 'Serviços',
+    value: 'servicos',
+    icon: <PaintRoller size={24} weight="regular" />
   },
   {
-    name: 'Outro ',
-    value: 'outro',
-    icon: <CirclesFour size={24} weight="regular" />
+    name: 'Transporte',
+    value: 'transporte',
+    icon: <Car size={24} weight="regular" />
+  },
+  {
+    name: 'Vestuário',
+    value: 'vestuario',
+    icon: <TShirt size={24} weight="regular" />
+  },
+  {
+    name: 'Viagem',
+    value: 'viagem',
+    icon: <Airplane size={24} weight="regular" />
   }
 ]

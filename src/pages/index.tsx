@@ -1,6 +1,7 @@
+import { NextPage } from 'next'
+
 import { Header } from 'components/Header'
 import { Transactions } from 'components/Transactions'
-import { NextPage } from 'next'
 
 import styles from 'styles/home.module.scss'
 
