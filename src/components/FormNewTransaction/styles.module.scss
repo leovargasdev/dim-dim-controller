@@ -1,0 +1,28 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  row-gap: 32px;
+
+  width: 100%;
+  border-radius: 10px;
+  padding: 32px;
+  background: var(--background-secondary);
+
+  > button {
+    width: auto;
+    padding: 12px 16px;
+  }
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  row-gap: 32px;
+
+  .line {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    column-gap: 16px;
+  }
+}
+

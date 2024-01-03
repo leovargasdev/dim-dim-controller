@@ -1,16 +1,11 @@
 import { NextPage } from 'next'
 
-import { Header } from 'components/Header'
-import { Transactions } from 'components/Transactions'
-
-import styles from 'styles/home.module.scss'
+import { Transactions, Layout } from 'components'
 
 const HomePage: NextPage = () => (
-  <div className={styles.container}>
-    <Header />
-
+  <Layout>
     <Transactions />
-  </div>
+  </Layout>
 )
 
 export default HomePage

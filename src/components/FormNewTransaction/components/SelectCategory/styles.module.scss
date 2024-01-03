@@ -1,0 +1,73 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  row-gap: 8px;
+
+  label {
+    font-size: 1rem;
+    line-height: 1.25rem;
+    color: var(--primary);
+  }
+}
+
+.options {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+
+  width: 100%;
+
+  button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 8px;
+
+    font-weight: 400;
+
+    width: 100%;
+    padding: 12px;
+    border-radius: 6px;
+    color: var(--primary);
+    background: rgba(22, 23, 27, 0.3);
+
+    border: 1px solid transparent;
+
+    &.category__alimentacao {
+      background: rgba(99, 57, 155, 0.3);
+    }
+
+    &.category__educacao {
+      background: rgba(236, 27, 134, 0.3);
+    }
+
+    &.category__investimento {
+      background: rgba(252, 172, 0, 0.3);
+    }
+
+    &.category__lazer {
+      background: rgba(144, 144, 144, 0.3);
+    }
+
+    &.category__moradia {
+      background: rgba(42, 204, 113, 0.3);
+    }
+
+    &.category__saude {
+      background: rgba(166, 44, 52, 0.3);
+    }
+
+    &.category__receita {
+      background: rgba(39, 213, 248, 0.3);
+    }
+
+    &.category__vestuario {
+      background: rgba(28, 96, 202, 0.3);
+    }
+
+    &.category__outro {
+      background: rgba(255, 255, 255, 0.3);
+    }
+  }
+}
