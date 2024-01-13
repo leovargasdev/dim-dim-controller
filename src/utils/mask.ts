@@ -1,18 +1,29 @@
+export const maskOnlyNumber = (value: string): string => {
+  return value.replace(/(\D)/g, '')
+}
+
 export const maskNumber = (value: string): number => {
-  return Number(value.replace(/(\D)/g, ''))
+  return Number(maskOnlyNumber(value))
 }
 
 export const maskMoney = (data: string): string => {
-  const size = data.length
-  const value = data.replace(/(\D)/g, '')
-
-  if (size >= 11) {
-    return value.replace(/^(\d{1,5})(\d{3})(\d{3})(\d{2})$/, '$1.$2.$3,$4')
+  if (!data) {
+    return 'R$ '
   }
 
-  if (size >= 6) {
-    return value.replace(/^(\d{1,3})(\d{3})(\d{2})$/, '$1.$2,$3')
-  }
+  const value = maskOnlyNumber(data)
+  const size = value.length
 
-  return value.replace(/^(\d{1,3})(\d{2})$/, '$1,$2')
+  const end = value.substring(size - 2, size)
+  const start = value.substring(0, size - 2)
+
+  const moneyFormatter = new Intl.NumberFormat('pt-BR', {
+    currency: 'BRL',
+    style: 'currency',
+    minimumFractionDigits: 2
+  })
+
+  const price = parseFloat([start, end].join('.'))
+
+  return moneyFormatter.format(price)
 }
