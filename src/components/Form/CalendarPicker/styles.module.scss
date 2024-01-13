@@ -1,0 +1,11 @@
+.container {
+  // background: blue;
+
+  td button:hover {
+    background-color: var(--success)!important;
+  }
+
+  > div > div > div > div > div {
+    text-transform: capitalize;
+  }
+}
