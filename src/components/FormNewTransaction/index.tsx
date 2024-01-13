@@ -4,11 +4,11 @@ import { useForm, FormProvider } from 'react-hook-form'
 
 import api from 'services/api'
 import { maskMoney } from 'utils/mask'
-
-import { CalendarPicker, Input } from 'components/Form'
-import { SelectType } from './components/SelectType'
-import { SelectCategory } from './components/SelectCategory'
+import CATEGORIES from 'data/categories'
+import TYPE_TRANSACTIONS from 'data/type-transactions'
 import { zodTransactionSchema, defaultValues } from 'utils/transaction'
+
+import { CalendarPicker, Input, SelectCell } from 'components/Form'
 
 import styles from './styles.module.scss'
 
@@ -31,8 +31,6 @@ export const FormNewTransaction = () => {
     }
   }
 
-  console.log(useFormMethods.formState.errors)
-
   return (
     <FormProvider {...useFormMethods}>
       <form
@@ -42,7 +40,12 @@ export const FormNewTransaction = () => {
         <main className={styles.main}>
           <div className={styles.header}>
             <div className={styles.header__inputs}>
-              <SelectType />
+              <SelectCell
+                name="type"
+                size="49%"
+                label="Tipo de transação"
+                options={TYPE_TRANSACTIONS}
+              />
 
               <Input
                 type="text"
@@ -64,7 +67,7 @@ export const FormNewTransaction = () => {
             <CalendarPicker name="date" />
           </div>
 
-          <SelectCategory />
+          <SelectCell name="category" options={CATEGORIES} label="Categorias" />
         </main>
 
         <button
