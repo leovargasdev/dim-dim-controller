@@ -26,7 +26,7 @@ export default [
     name: 'Assinaturas',
     value: 'assinaturas',
     icon: <Television size={24} weight="regular" />,
-    color: ''
+    color: '#ac4f2b'
   },
   {
     name: 'Educação',
@@ -68,7 +68,7 @@ export default [
     name: 'Pet',
     value: 'pet',
     icon: <PawPrint size={24} weight="regular" />,
-    color: ''
+    color: '#ffa600'
   },
   {
     name: 'Saúde',
@@ -80,13 +80,13 @@ export default [
     name: 'Serviços',
     value: 'servicos',
     icon: <PaintRoller size={24} weight="regular" />,
-    color: ''
+    color: '#245c2c'
   },
   {
     name: 'Transporte',
     value: 'transporte',
     icon: <Car size={24} weight="regular" />,
-    color: ''
+    color: '#808aff'
   },
   {
     name: 'Vestuário',
@@ -98,6 +98,6 @@ export default [
     name: 'Viagem',
     value: 'viagem',
     icon: <Airplane size={24} weight="regular" />,
-    color: ''
+    color: '#50e2b1'
   }
 ]

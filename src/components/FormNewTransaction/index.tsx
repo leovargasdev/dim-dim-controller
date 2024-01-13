@@ -42,7 +42,6 @@ export const FormNewTransaction = () => {
             <div className={styles.header__inputs}>
               <SelectCell
                 name="type"
-                size="49%"
                 label="Tipo de transação"
                 options={TYPE_TRANSACTIONS}
               />

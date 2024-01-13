@@ -14,9 +14,7 @@
 .options {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
-  row-gap: 6px;
-
+  gap: 8px;
   width: 100%;
 
   button {
@@ -24,6 +22,7 @@
     align-items: center;
     justify-content: center;
     column-gap: 8px;
+    flex: 1 1 280px;
 
     font-weight: 400;
 

@@ -14,15 +14,9 @@ interface SelectCellProps {
   name: string
   label: string
   options: Option[]
-  size?: string
 }
 
-export const SelectCell = ({
-  name,
-  label,
-  size = '190',
-  options
-}: SelectCellProps) => {
+export const SelectCell = ({ name, label, options }: SelectCellProps) => {
   const { control } = useFormContext()
   const { field, fieldState } = useController({ name, control })
 
@@ -50,7 +44,7 @@ export const SelectCell = ({
           <button
             type="button"
             key={option.value}
-            style={{ maxWidth: size, ...handleStyle(option) }}
+            style={handleStyle(option)}
             onClick={() => field.onChange(option.value)}
           >
             {option?.icon}
