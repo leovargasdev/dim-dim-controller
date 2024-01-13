@@ -7,11 +7,12 @@ export const maskNumber = (value: string): number => {
 }
 
 export const maskMoney = (data: string): string => {
-  if (!data) {
+  const value = maskOnlyNumber(data)
+
+  if (!value) {
     return 'R$ '
   }
 
-  const value = maskOnlyNumber(data)
   const size = value.length
 
   const end = value.substring(size - 2, size)

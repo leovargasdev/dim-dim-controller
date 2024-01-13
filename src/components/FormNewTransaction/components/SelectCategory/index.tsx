@@ -16,9 +16,21 @@ export const SelectCategory = () => {
     field.onChange(category)
   }
 
+  const handleStyle = (category: any) => {
+    if (field.value === category.value) {
+      const color = category?.color || '#1C60CA'
+      return {
+        borderColor: color + '91',
+        background: color + '2d'
+      }
+    }
+
+    return {}
+  }
+
   return (
     <fieldset className={styles.container}>
-      <label htmlFor="type">Tipo de transação</label>
+      <label htmlFor="type">Categoria</label>
 
       <div className={styles.options}>
         {CATEGORIES.map(category => (
@@ -27,7 +39,12 @@ export const SelectCategory = () => {
             key={category.value}
             onClick={() => onChangeCategory(category.value)}
             // eslint-disable-next-line prettier/prettier
-            className={field.value === category.value ? styles['category__' + category.value] : ''}
+            style={handleStyle(category)}
+            // className={
+            //   field.value === category.value
+            //     ? styles['category__' + category.value]
+            //     : ''
+            // }
           >
             {category?.icon}
             {category.name}

@@ -1,8 +1,6 @@
-import { formatDate } from 'utils/format'
-
 export const defaultValues = {
   name: '',
-  date: formatDate(new Date(), 'yyyy-MM-dd'),
+  date: new Date(),
   type: 'in',
   category: '',
   value: ''

@@ -5,7 +5,7 @@ import { useForm, FormProvider } from 'react-hook-form'
 import api from 'services/api'
 import { maskMoney } from 'utils/mask'
 
-import { Input } from 'components/Form'
+import { CalendarPicker, Input } from 'components/Form'
 import { SelectType } from './components/SelectType'
 import { SelectCategory } from './components/SelectCategory'
 import { zodTransactionSchema, defaultValues } from 'utils/transaction'
@@ -23,12 +23,15 @@ export const FormNewTransaction = () => {
     setLoading(true)
 
     try {
-      await api.post('/transaction/create', data)
+      console.log(data)
+      // await api.post('/transaction/create', data)
     } finally {
       useFormMethods.reset()
       setTimeout(() => setLoading(false), 3000)
     }
   }
+
+  console.log(useFormMethods.formState.errors)
 
   return (
     <FormProvider {...useFormMethods}>
@@ -37,26 +40,28 @@ export const FormNewTransaction = () => {
         onSubmit={useFormMethods.handleSubmit(onSubmit)}
       >
         <main className={styles.main}>
-          <SelectType />
+          <div className={styles.header}>
+            <div className={styles.header__inputs}>
+              <SelectType />
 
-          <div className={styles.line}>
-            <Input
-              type="text"
-              name="name"
-              label="Descrição"
-              placeholder="Descrição"
-            />
+              <Input
+                type="text"
+                label="Valor"
+                name="value"
+                placeholder="R$ 0,00"
+                maxLength={12}
+                mask={maskMoney}
+              />
 
-            <Input
-              type="text"
-              label="Valor"
-              name="value"
-              placeholder="R$ 0,00"
-              maxLength={12}
-              mask={maskMoney}
-            />
+              <Input
+                type="text"
+                name="name"
+                label="Descrição"
+                placeholder="Descrição"
+              />
+            </div>
 
-            <Input type="date" label="Data" name="date" placeholder="" />
+            <CalendarPicker name="date" />
           </div>
 
           <SelectCategory />
