@@ -1,7 +1,7 @@
 import { useController, useFormContext } from 'react-hook-form'
 
 import { ErrorMessage } from 'components/Form'
-import { TransationType } from 'types/transation'
+import { TransactionType } from 'types/transaction'
 
 import styles from './styles.module.scss'
 import { CaretDown, CaretUp } from '@phosphor-icons/react'
@@ -13,7 +13,7 @@ export const SelectType = () => {
   const error = fieldState.error?.message
   const isError = typeof error === 'string'
 
-  const onChangeType = (type: TransationType): void => {
+  const onChangeType = (type: TransactionType): void => {
     field.onChange(type)
   }
 

@@ -11,23 +11,25 @@ import { zodTransactionSchema, defaultValues } from 'utils/transaction'
 import { CalendarPicker, Input, SelectCell } from 'components/Form'
 
 import styles from './styles.module.scss'
+import { FormTransaction } from 'types/transaction'
 
 export const FormNewTransaction = () => {
   const [loading, setLoading] = useState<boolean>(false)
-  const useFormMethods = useForm({
+  const useFormMethods = useForm<FormTransaction>({
     mode: 'all',
     resolver: zodResolver(zodTransactionSchema),
     defaultValues
   })
-  const onSubmit = async (data: any): Promise<void> => {
+
+  const onSubmit = async (data: FormTransaction): Promise<void> => {
     setLoading(true)
 
     try {
-      console.log(data)
-      // await api.post('/transaction/create', data)
+      const r = await api.post('/transaction/create', data)
+      console.log(r)
     } finally {
-      useFormMethods.reset()
-      setTimeout(() => setLoading(false), 3000)
+      // useFormMethods.reset()
+      setLoading(false)
     }
   }
 
@@ -71,7 +73,7 @@ export const FormNewTransaction = () => {
 
         <button
           type="submit"
-          disabled={loading}
+          disabled={loading || !useFormMethods.formState.isValid}
           className={`button ${loading ? 'loading' : ''}`}
         >
           Cadastrar transação

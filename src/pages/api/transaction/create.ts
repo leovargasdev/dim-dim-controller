@@ -1,25 +1,33 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { collection, addDoc } from 'firebase/firestore/lite'
 
-import firebase from 'service/firebase'
-import { maskNumber } from 'utils/mask'
+import { db } from 'services/firebase'
 import { zodTransactionSchema } from 'utils/transaction'
+import { formatCurrencyToFloat, formatDate } from 'utils/format'
+
+const NAME_COLLECTION = 'transactions'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-  const data = zodTransactionSchema.parse(req.body)
+  try {
+    if (req.method === 'POST') {
+      const data = zodTransactionSchema.parse(req.body)
 
-  let value = maskNumber(data.value)
-  value = data.type === 'in' ? value : value * -1
+      const transaction = {
+        ...data,
+        date: new Date(data.date),
+        created_at: new Date(),
+        value: formatCurrencyToFloat(data.value)
+      }
 
-  const transaction = {
-    name: data.name,
-    category: data.category,
-    date: data.date,
-    value,
-    created_at: new Date()
+      const transactionsCollection = collection(db, NAME_COLLECTION)
+      const { id } = await addDoc(transactionsCollection, transaction)
+
+      const monthFilter = formatDate(transaction.date, 'MMMM-yyyy')
+
+      return res.status(200).send({ ...transaction, id, monthFilter })
+    }
+  } catch (err) {
+    console.log(err)
+    return res.status(500).send('Internal Server Error')
   }
-
-  await addDoc(collection(firebase, 'transactions'), transaction)
-
-  return res.status(201).send('')
 }

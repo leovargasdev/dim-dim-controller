@@ -1,5 +1,6 @@
 import { format } from 'date-fns'
 import ptBR from 'date-fns/locale/pt-BR'
+import { maskOnlyNumber } from './mask'
 
 const dateFnsOptions = {
   locale: ptBR
@@ -16,4 +17,11 @@ export const formatDate = (
   const date = typeof value === 'string' ? new Date(value) : value
 
   return format(date, formatString)
+}
+
+export const formatCurrencyToFloat = (value: string): number => {
+  let [numeral, cents] = value.split(',')
+  numeral = maskOnlyNumber(numeral)
+
+  return parseFloat(numeral + '.' + cents)
 }

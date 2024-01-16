@@ -1,7 +1,9 @@
-export const defaultValues = {
+import { FormTransaction } from 'types/transaction'
+
+export const defaultValues: FormTransaction = {
   name: '',
   date: new Date(),
   type: 'in',
-  category: '',
+  category: 'alimentacao',
   value: ''
 }
