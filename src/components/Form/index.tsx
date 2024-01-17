@@ -1,3 +1,4 @@
+export { Autocomplete } from './Autocomplete'
 export { CalendarPicker } from './CalendarPicker'
 export { ErrorMessage } from './ErrorMessage'
 export { Input } from './Input'

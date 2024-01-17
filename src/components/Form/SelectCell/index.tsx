@@ -1,11 +1,10 @@
+import type { Option } from 'types/global'
 import { ErrorMessage } from 'components/Form'
 import { useController, useFormContext } from 'react-hook-form'
 
 import styles from './styles.module.scss'
 
-interface Option {
-  name: string
-  value: string
+interface OptionCell extends Option {
   icon: React.ReactNode
   color?: string
 }
@@ -13,7 +12,7 @@ interface Option {
 interface SelectCellProps {
   name: string
   label: string
-  options: Option[]
+  options: OptionCell[]
 }
 
 export const SelectCell = ({ name, label, options }: SelectCellProps) => {
@@ -23,7 +22,7 @@ export const SelectCell = ({ name, label, options }: SelectCellProps) => {
   const error = fieldState.error?.message
   const isError = typeof error === 'string'
 
-  const handleStyle = (category: Option) => {
+  const handleStyle = (category: OptionCell) => {
     if (field.value === category.value) {
       const color = category?.color || '#1C60CA'
       return {

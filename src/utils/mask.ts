@@ -21,7 +21,7 @@ export const maskMoney = (data: string): string => {
   const moneyFormatter = new Intl.NumberFormat('pt-BR', {
     currency: 'BRL',
     style: 'currency',
-    minimumFractionDigits: 2
+    minimumFractionDigits: end.length <= 1 ? 1 : 2
   })
 
   const price = parseFloat([start, end].join('.'))

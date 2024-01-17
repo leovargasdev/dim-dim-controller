@@ -25,3 +25,10 @@ export const formatCurrencyToFloat = (value: string): number => {
 
   return parseFloat(numeral + '.' + cents)
 }
+
+export const normalizeString = (value: string): string => {
+  return value
+    .toLocaleLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+}

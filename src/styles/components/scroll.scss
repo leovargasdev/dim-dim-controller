@@ -4,11 +4,11 @@
 }
 
 .scroll::-webkit-scrollbar {
-  width: 6px;
-  background: #d9d9d9;
+  width: 4px;
+  background: transparent;
 }
 
 .scroll::-webkit-scrollbar-thumb {
-  background: #bebebe;
+  background: var(--secondary);
   border-radius: 4px;
 }
