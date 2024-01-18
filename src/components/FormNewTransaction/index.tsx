@@ -1,9 +1,7 @@
-import { toast } from 'sonner'
 import { useState } from 'react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm, FormProvider } from 'react-hook-form'
 
-import api from 'services/api'
 import { maskMoney } from 'utils/mask'
 import CATEGORIES from 'data/categories'
 import TYPE_TRANSACTIONS from 'data/type-transactions'
@@ -18,8 +16,11 @@ import {
 } from 'components/Form'
 
 import styles from './styles.module.scss'
+import { useTransactions } from 'hooks/useTransactions'
 
 export const FormNewTransaction = () => {
+  const { transactions, addTransaction } = useTransactions()
+
   const [loading, setLoading] = useState<boolean>(false)
   const useFormMethods = useForm<FormTransaction>({
     mode: 'all',
@@ -29,20 +30,8 @@ export const FormNewTransaction = () => {
 
   const onSubmit = async (data: FormTransaction): Promise<void> => {
     setLoading(true)
-    try {
-      const response = await api.post('/transaction/create', data)
-      console.log(response.data)
-      // useFormMethods.reset()
-      toast.success('Transação cadastrada com sucesso!')
-    } catch (err) {
-      console.log(err)
-      toast.error('Ops... deu algo errado!', {
-        description: 'Falha ao cadastrar transação',
-        duration: 5000
-      })
-    } finally {
-      setLoading(false)
-    }
+    await addTransaction(data)
+    setLoading(false)
   }
 
   return (
