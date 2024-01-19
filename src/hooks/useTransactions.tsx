@@ -23,14 +23,8 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
   const [optionFilter, setOptionFilter] = useState<string>('')
   const [transactions, setTransactions] = useState<Transaction[]>([])
 
-  const loadInfo = async () => {
-    const data = await getTransactions()
-    console.log(data)
-    // setTransactions(data)
-  }
-
   useEffect(() => {
-    loadInfo()
+    getTransactions().then(setTransactions)
   }, [])
 
   useEffect(() => {

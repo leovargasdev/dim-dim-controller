@@ -16,7 +16,7 @@ export const formatDate = (
 
   const date = typeof value === 'string' ? new Date(value) : value
 
-  return format(date, formatString)
+  return format(date, formatString, dateFnsOptions)
 }
 
 export const formatCurrencyToFloat = (value: string): number => {

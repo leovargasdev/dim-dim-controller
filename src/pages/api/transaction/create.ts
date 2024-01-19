@@ -14,8 +14,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
       const transaction = {
         ...data,
-        date: new Date(data.date),
-        created_at: new Date(),
+        date: new Date(data.date).toString(),
+        created_at: new Date().toString(),
         value: formatCurrencyToFloat(data.value)
       }
 

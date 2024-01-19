@@ -23,6 +23,7 @@ interface Base {
   category: TransactionCategory
 }
 export interface Transaction extends Base {
+  id: string
   value: number
   created_at: Date
   monthFilter: string

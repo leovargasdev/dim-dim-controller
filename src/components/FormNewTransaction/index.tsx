@@ -28,6 +28,8 @@ export const FormNewTransaction = () => {
     defaultValues
   })
 
+  console.log(transactions)
+
   const onSubmit = async (data: FormTransaction): Promise<void> => {
     setLoading(true)
     await addTransaction(data)
@@ -63,148 +65,7 @@ export const FormNewTransaction = () => {
                 name="name"
                 label="Descrição"
                 placeholder="Descrição"
-                options={[
-                  {
-                    value: '10164',
-                    name: 'Adaptabilidade'
-                  },
-                  {
-                    value: '10165',
-                    name: 'Alteridade'
-                  },
-                  {
-                    value: '10166',
-                    name: 'Atenção'
-                  },
-                  {
-                    value: '10167',
-                    name: 'Atendimento ao cliente'
-                  },
-                  {
-                    value: '10168',
-                    name: 'Autonomia'
-                  },
-                  {
-                    value: '10169',
-                    name: 'Boa comunicação'
-                  },
-                  {
-                    value: '10170',
-                    name: 'Compaixão'
-                  },
-                  {
-                    value: '10171',
-                    name: 'Competência'
-                  },
-                  {
-                    value: '10172',
-                    name: 'Comunicação escrita'
-                  },
-                  {
-                    value: '10173',
-                    name: 'Confiança'
-                  },
-                  {
-                    value: '10174',
-                    name: 'Controle emocional'
-                  },
-                  {
-                    value: '10175',
-                    name: 'Criatividade'
-                  },
-                  {
-                    value: '10176',
-                    name: 'Delegação'
-                  },
-                  {
-                    value: '10177',
-                    name: 'Determinação'
-                  },
-                  {
-                    value: '10178',
-                    name: 'Empatia'
-                  },
-                  {
-                    value: '10179',
-                    name: 'Ética'
-                  },
-                  {
-                    value: '10180',
-                    name: 'Falar em público'
-                  },
-                  {
-                    value: '10181',
-                    name: 'Flexibilidade'
-                  },
-                  {
-                    value: '10182',
-                    name: 'Foco em resultados'
-                  },
-                  {
-                    value: '10183',
-                    name: 'Inovação'
-                  },
-                  {
-                    value: '10283',
-                    name: 'Inteligência'
-                  },
-                  {
-                    value: '10284',
-                    name: 'Liderança'
-                  },
-                  {
-                    value: '10285',
-                    name: 'Negociação'
-                  },
-                  {
-                    value: '10286',
-                    name: 'Orçamento'
-                  },
-                  {
-                    value: '10184',
-                    name: 'Organização'
-                  },
-                  {
-                    value: '10185',
-                    name: 'Paciência'
-                  },
-                  {
-                    value: '10186',
-                    name: 'Pensamento crítico'
-                  },
-                  {
-                    value: '10187',
-                    name: 'Persuasão'
-                  },
-                  {
-                    value: '10188',
-                    name: 'Proatividade'
-                  },
-                  {
-                    value: '10189',
-                    name: 'Raciocínio lógico'
-                  },
-                  {
-                    value: '10190',
-                    name: 'Resiliência'
-                  },
-                  {
-                    value: '10191',
-                    name: 'Resolução de conflitos'
-                  },
-                  {
-                    value: '10192',
-                    name: 'Resolução de problemas'
-                  },
-                  {
-                    value: '10193',
-                    name: 'Respeito a prazos'
-                  },
-                  {
-                    value: '10194',
-                    name: 'Trabalho em equipe'
-                  }
-                ]}
+                options={transactions.map(t => ({ name: t.name, value: t.id }))}
               />
             </div>
 
