@@ -1,4 +1,4 @@
-import { ChangeEvent, InputHTMLAttributes } from 'react'
+import { ChangeEvent, InputHTMLAttributes, useState } from 'react'
 import { useController, useFormContext } from 'react-hook-form'
 
 import type { Option } from 'types/global'
@@ -10,34 +10,36 @@ import { searchValueInArray } from 'utils/array'
 interface AutocompleteProps extends InputHTMLAttributes<HTMLInputElement> {
   name: string
   label: string
-  mask?: null | ((value: string) => string)
   options: Option[]
+  onSelected: (value: string) => void
 }
 
 export const Autocomplete = ({
   name,
   label,
-  mask = null,
   options,
+  onSelected,
   ...rest
 }: AutocompleteProps) => {
   const { control } = useFormContext()
   const { field, fieldState } = useController({ name, control })
+  const [hasSelected, setHasSelected] = useState<boolean>(false)
 
   const error = fieldState.error?.message
   const isError = typeof error === 'string'
 
   const onChange = (event: ChangeEvent<HTMLInputElement>): void => {
-    let value = event.target.value
-
-    if (mask !== null) {
-      value = mask(value)
-    }
-
-    field.onChange(value)
+    hasSelected && setHasSelected(false)
+    field.onChange(event.target.value)
   }
 
   const filtredOptions = searchValueInArray(options, 'name', field.value)
+
+  const handleSelectedOption = (option: Option): void => {
+    onSelected(option.value)
+    field.onChange(option.name)
+    setHasSelected(true)
+  }
 
   return (
     <fieldset className={styles.container}>
@@ -47,14 +49,16 @@ export const Autocomplete = ({
         <div
           className={styles.content}
           aria-invalid={isError}
-          aria-expanded={!!field.value.length}
+          aria-expanded={!!field.value.length && !hasSelected}
         >
           <input id={name} {...rest} {...field} onChange={onChange} />
 
           <ul className="scroll">
             {filtredOptions.map(op => (
               <li key={op.value}>
-                <button type="button">{op.name}</button>
+                <button type="button" onClick={() => handleSelectedOption(op)}>
+                  {op.name}
+                </button>
               </li>
             ))}
           </ul>

@@ -28,12 +28,19 @@ export const FormNewTransaction = () => {
     defaultValues
   })
 
-  console.log(transactions)
-
   const onSubmit = async (data: FormTransaction): Promise<void> => {
     setLoading(true)
     await addTransaction(data)
     setLoading(false)
+  }
+
+  const onSelectAutocomplete = (transactionId: string): void => {
+    const transaction = transactions.find(t => t.id === transactionId)
+
+    if (transaction) {
+      useFormMethods.setValue('category', transaction.category)
+      useFormMethods.setValue('type', transaction.type)
+    }
   }
 
   return (
@@ -65,6 +72,7 @@ export const FormNewTransaction = () => {
                 name="name"
                 label="Descrição"
                 placeholder="Descrição"
+                onSelected={onSelectAutocomplete}
                 options={transactions.map(t => ({ name: t.name, value: t.id }))}
               />
             </div>
