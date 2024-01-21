@@ -17,11 +17,12 @@ import {
 
 import styles from './styles.module.scss'
 import { useTransactions } from 'hooks/useTransactions'
+import { useRouter } from 'next/router'
 
 export const FormNewTransaction = () => {
+  const router = useRouter()
   const { transactions, addTransaction } = useTransactions()
 
-  const [loading, setLoading] = useState<boolean>(false)
   const useFormMethods = useForm<FormTransaction>({
     mode: 'all',
     resolver: zodResolver(zodTransactionSchema),
@@ -29,9 +30,12 @@ export const FormNewTransaction = () => {
   })
 
   const onSubmit = async (data: FormTransaction): Promise<void> => {
-    setLoading(true)
-    await addTransaction(data)
-    setLoading(false)
+    const isSuccess = await addTransaction(data)
+
+    // if (isSuccess) {
+    // useFormMethods.reset()
+    // router.push('/')
+    // }
   }
 
   const onSelectAutocomplete = (transactionId: string): void => {
@@ -42,6 +46,8 @@ export const FormNewTransaction = () => {
       useFormMethods.setValue('type', transaction.type)
     }
   }
+
+  const isLoading = useFormMethods.formState.isSubmitting
 
   return (
     <FormProvider {...useFormMethods}>
@@ -85,8 +91,8 @@ export const FormNewTransaction = () => {
 
         <button
           type="submit"
-          disabled={loading}
-          className={`button ${loading ? 'loading' : ''}`}
+          disabled={isLoading}
+          className={`button ${isLoading ? 'loading' : ''}`}
         >
           Cadastrar transação
         </button>
