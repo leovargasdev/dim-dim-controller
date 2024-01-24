@@ -8,7 +8,7 @@ import { getTransactions } from 'services/transactions'
 
 export interface TransactionsContextData {
   transactions: Transaction[]
-  addTransaction: (goal: FormTransaction) => Promise<void>
+  addTransaction: (goal: FormTransaction) => Promise<boolean>
   optionFilter: string
   setOptionFilter: (option: string) => void
 }
@@ -33,11 +33,14 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
     }
   }, [transactions])
 
-  const handleAddTransaction = async (data: FormTransaction) => {
+  const handleAddTransaction = async (
+    data: FormTransaction
+  ): Promise<boolean> => {
     try {
       const response = await api.post('/transaction/create', data)
       setTransactions(state => [...state, response.data])
       toast.success('Transação cadastrada com sucesso!')
+      return true
     } catch (err) {
       console.log(err)
       toast.error('Ops... tivemos um problema!', {
@@ -45,6 +48,8 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
         duration: 5000
       })
     }
+
+    return false
   }
 
   return (
