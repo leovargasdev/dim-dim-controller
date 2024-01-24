@@ -1,6 +1,6 @@
 export type TransactionType = 'in' | 'out'
 
-type TransactionCategory =
+type TransactionOut =
   | 'alimentacao'
   | 'assinaturas'
   | 'educacao'
@@ -16,11 +16,18 @@ type TransactionCategory =
   | 'vestuario'
   | 'viagem'
 
+type TransactionIn =
+  | 'cashback'
+  | 'outros'
+  | 'premio'
+  | 'investimento'
+  | 'salario'
+
 interface Base {
   name: string
   date: Date
   type: TransactionType
-  category: TransactionCategory
+  category: TransactionOut | TransactionIn
 }
 export interface Transaction extends Base {
   id: string

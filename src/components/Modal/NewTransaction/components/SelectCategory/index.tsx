@@ -1,6 +1,6 @@
 import { useController, useFormContext } from 'react-hook-form'
 
-import CATEGORIES from 'data/categories'
+import CATEGORIES from 'data/transaction-in-categories'
 import { ErrorMessage } from 'components/Form'
 
 import styles from './styles.module.scss'

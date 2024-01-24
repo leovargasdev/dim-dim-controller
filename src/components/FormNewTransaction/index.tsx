@@ -1,9 +1,10 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm, FormProvider } from 'react-hook-form'
 
 import { maskMoney } from 'utils/mask'
-import CATEGORIES from 'data/categories'
+import CATEGORIES_IN from 'data/transaction-in-categories'
+import CATEGORIES_OUT from 'data/transaction-out-categories'
 import TYPE_TRANSACTIONS from 'data/type-transactions'
 import type { FormTransaction } from 'types/transaction'
 import { zodTransactionSchema, defaultValues } from 'utils/transaction'
@@ -43,6 +44,21 @@ export const FormNewTransaction = () => {
     }
   }
 
+  const type = useFormMethods.watch('type')
+  const categories = type === 'in' ? CATEGORIES_IN : CATEGORIES_OUT
+
+  useEffect(() => {
+    const category = useFormMethods.getValues('category')
+    const isOutCategory =
+      CATEGORIES_OUT.findIndex(c => c.value === category) >= 0
+
+    if (isOutCategory && type === 'in') {
+      useFormMethods.setValue('category', 'salario')
+    } else if (!isOutCategory && type === 'out') {
+      useFormMethods.setValue('category', 'alimentacao')
+    }
+  }, [type])
+
   return (
     <FormProvider {...useFormMethods}>
       <form
@@ -80,7 +96,7 @@ export const FormNewTransaction = () => {
             <CalendarPicker name="date" />
           </div>
 
-          <SelectCell name="category" options={CATEGORIES} label="Categorias" />
+          <SelectCell name="category" options={categories} label="Categorias" />
         </main>
 
         <button
