@@ -11,6 +11,6 @@ export const Layout = ({ children }: LayoutProps) => (
   <div className={styles.container}>
     <Header />
 
-    {children}
+    <main>{children}</main>
   </div>
 )

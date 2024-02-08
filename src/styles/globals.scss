@@ -8,15 +8,16 @@
 }
 
 :root {
-  --background: #16171B;
+  --background: #0c0a09;
   --background-secondary: #1F2326;
+  --border: #292524;
 
-  --primary: #F5F5F5;
-  --secondary: #909090;
+  --primary: #FAFAF9;
+  --secondary: #A8A29E;
 
-  --link: #1C60CA;
-  --success: #0F8E53;
-  --cancel : #A62C34;
+  --link: #3B82F6;
+  --green: #24B357;
+  --red : #DC2627;
 
   --error: #e2414c;
 }
@@ -25,9 +26,11 @@ body {
   background: var(--background);
 }
 
-body, button, textarea, input {
+body, button, textarea, input, tr {
   color: var(--primary);
   font: 400 1rem "Poppins", sans-serif;
+
+  transition: all 0.4s;
 }
 
 h1, h2, h3, h4, h5, h6, strong, b, button {

@@ -1,7 +1,43 @@
 .header {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  justify-content: center;
 
   width: 100%;
+  padding: 24px 40px;  
+  border: 1px solid var(--border);
+
+  > div {
+    width: 100%;
+    max-width: 1440px;
+
+    display: flex;
+    align-items: center;
+    column-gap: 40px;
+
+    strong {
+      display: flex;
+      align-items: center;
+      column-gap: 2px;
+
+      font-size: 20px;
+      letter-spacing: -0.5px;
+    }
+
+    .separator {
+      width: 1px;
+      height: 32px;
+      background: var(--border);
+    }
+
+    button {
+      margin-left: auto;
+      color: var(--red);
+    }
+  }
+}
+
+.menu {
+  display: flex;
+  align-items: center;
+  column-gap: 40px;
 }
