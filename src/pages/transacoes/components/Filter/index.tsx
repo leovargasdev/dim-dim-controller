@@ -4,7 +4,7 @@ import { useTransactions } from 'hooks/useTransactions'
 import styles from './styles.module.scss'
 
 export const TransactionsFilter = () => {
-  const { transactions, setOptionFilter, optionFilter } = useTransactions()
+  const { transactions, setMonthFilter, monthFilter } = useTransactions()
 
   const options: string[] = useMemo(() => {
     if (transactions.length === 0) {
@@ -15,7 +15,7 @@ export const TransactionsFilter = () => {
     transactions.map(trans => months.add(trans.monthFilter))
 
     const result = Array.from(months).reverse() as string[]
-    !optionFilter && setOptionFilter(result[0])
+    !monthFilter && setMonthFilter(result[0])
 
     return result
   }, [transactions])
@@ -24,14 +24,14 @@ export const TransactionsFilter = () => {
     <div className={styles.container}>
       {options.map(option => {
         const [month, year] = option.split('-')
-        const className = optionFilter === option ? styles.active : ''
+        const className = monthFilter === option ? styles.active : ''
 
         return (
           <button
             type="button"
             key={option}
             className={className}
-            onClick={() => setOptionFilter(option)}
+            onClick={() => setMonthFilter(option)}
           >
             {month} ({year})
           </button>

@@ -1,5 +1,5 @@
 import { toast } from 'sonner'
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 
 import api from 'services/api'
 import { sortArray } from 'utils/array'
@@ -8,10 +8,11 @@ import { KEY_LOCAL_TRANSACTIONS } from 'utils/constants'
 import type { Transaction, FormTransaction } from 'types/transaction'
 
 export interface TransactionsContextData {
+  monthFilter: string
   transactions: Transaction[]
+  transactionsFiltred: Transaction[]
+  setMonthFilter: (option: string) => void
   addTransaction: (goal: FormTransaction) => Promise<void>
-  optionFilter: string
-  setOptionFilter: (option: string) => void
 }
 
 interface TransactionsProviderProps {
@@ -21,7 +22,7 @@ interface TransactionsProviderProps {
 const TransactionsContext = createContext({} as TransactionsContextData)
 
 export function TransactionsProvider({ children }: TransactionsProviderProps) {
-  const [optionFilter, setOptionFilter] = useState<string>('')
+  const [monthFilter, setMonthFilter] = useState<string>('')
   const [transactions, setTransactions] = useState<Transaction[]>([])
 
   useEffect(() => {
@@ -48,13 +49,18 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
     }
   }
 
+  const transactionsFiltred = useMemo(() => {
+    return transactions.filter(trans => trans.monthFilter === monthFilter)
+  }, [transactions, monthFilter])
+
   return (
     <TransactionsContext.Provider
       value={{
+        monthFilter,
         transactions,
         addTransaction: handleAddTransaction,
-        optionFilter,
-        setOptionFilter
+        transactionsFiltred,
+        setMonthFilter
       }}
     >
       {children}

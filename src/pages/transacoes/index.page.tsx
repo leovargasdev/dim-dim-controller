@@ -1,28 +1,18 @@
 import { NextPage } from 'next'
-import { Money } from '@phosphor-icons/react'
-import { TransactionsFilter, TransactionsList } from './components'
+import {
+  TransactionsFilter,
+  TransactionsList,
+  TransactionsResume
+} from './components'
 
-const HomePage: NextPage = () => (
-  <>
-    <div>
-      <div>
-        <div>
-          <h2>Receita total(mês)</h2>
-          <Money size={32} />
-        </div>
-        <div>
-          <strong>R$ 9150,90</strong>
-          <p>
-            <span>+4%</span>em relação ao mês passado
-          </p>
-        </div>
-      </div>
-    </div>
+import styles from './styles.module.scss'
 
+const TransactionsPage: NextPage = () => (
+  <div className={styles.container}>
+    <TransactionsResume />
     <TransactionsFilter />
-
     <TransactionsList />
-  </>
+  </div>
 )
 
-export default HomePage
+export default TransactionsPage

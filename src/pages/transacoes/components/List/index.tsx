@@ -1,21 +1,14 @@
 import { CaretDown, CaretUp, Pencil, Trash } from '@phosphor-icons/react'
 
 import { Tooltip } from 'components'
-import { formatDate } from 'utils/format'
 import { TransactionType } from 'types/transaction'
 import { useTransactions } from 'hooks/useTransactions'
+import { formatDate, formatNumberToCurrency } from 'utils/format'
 
 import styles from './styles.module.scss'
 
 export const TransactionsList = () => {
-  const { transactions, optionFilter } = useTransactions()
-
-  const formatedCurrency = (value: number) => {
-    return new Intl.NumberFormat('pt-BR', {
-      style: 'currency',
-      currency: 'BRL'
-    }).format(value)
-  }
+  const { transactionsFiltred } = useTransactions()
 
   const tdTypeTransaction = (type: TransactionType) => {
     if (type === 'in') {
@@ -37,8 +30,6 @@ export const TransactionsList = () => {
     )
   }
 
-  const list = transactions.filter(trans => trans.monthFilter === optionFilter)
-
   return (
     <table className={styles.table}>
       <thead>
@@ -54,12 +45,12 @@ export const TransactionsList = () => {
       </thead>
 
       <tbody>
-        {list.map(transaction => (
+        {transactionsFiltred.map(transaction => (
           <tr key={transaction.id}>
             {tdTypeTransaction(transaction.type)}
             <td>{formatDate(transaction.date, "dd 'de' MMM. (iii)")}</td>
             <td>{transaction.name}</td>
-            <td>{formatedCurrency(transaction.value)}</td>
+            <td>{formatNumberToCurrency(transaction.value)}</td>
             <td>{transaction.category}</td>
             <td className={styles.action}>
               <Tooltip text="Editar transação">
