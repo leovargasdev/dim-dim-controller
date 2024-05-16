@@ -15,6 +15,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     const dbTransactions = query(collectionTransactions)
 
     const { docs } = await getDocs(dbTransactions)
+
     const transactions = docs.map(doc => {
       const transaction = doc.data()
       const id = doc.id

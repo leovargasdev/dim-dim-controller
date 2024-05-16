@@ -20,7 +20,7 @@ import styles from './styles.module.scss'
 import { useTransactions } from 'hooks/useTransactions'
 import { useRouter } from 'next/router'
 
-export const FormNewTransaction = () => {
+const NewTransactionPage = () => {
   const router = useRouter()
   const { transactions, addTransaction } = useTransactions()
 
@@ -62,6 +62,7 @@ export const FormNewTransaction = () => {
       useFormMethods.setValue('category', 'alimentacao')
     }
   }, [type])
+
   const isLoading = useFormMethods.formState.isSubmitting
 
   return (
@@ -115,3 +116,5 @@ export const FormNewTransaction = () => {
     </FormProvider>
   )
 }
+
+export default NewTransactionPage

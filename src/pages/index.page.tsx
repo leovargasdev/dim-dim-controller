@@ -1,12 +1,11 @@
 import { NextPage } from 'next'
-
-import { Transactions, Layout } from 'components'
+import { Transactions } from 'components'
 import { Money } from '@phosphor-icons/react'
 
 import home from 'styles/home.module.scss'
 
 const HomePage: NextPage = () => (
-  <Layout>
+  <>
     <div>
       <div>
         <div>
@@ -22,7 +21,7 @@ const HomePage: NextPage = () => (
       </div>
     </div>
     <Transactions />
-  </Layout>
+  </>
 )
 
 export default HomePage

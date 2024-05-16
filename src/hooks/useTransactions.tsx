@@ -1,10 +1,10 @@
+import { toast } from 'sonner'
 import { createContext, useContext, useEffect, useState } from 'react'
 
 import api from 'services/api'
+import { getTransactions } from 'services/transactions'
 import { KEY_LOCAL_TRANSACTIONS } from 'utils/constants'
 import type { Transaction, FormTransaction } from 'types/transaction'
-import { toast } from 'sonner'
-import { getTransactions } from 'services/transactions'
 
 export interface TransactionsContextData {
   transactions: Transaction[]
@@ -33,11 +33,10 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
     }
   }, [transactions])
 
-  const handleAddTransaction = async (
-    data: FormTransaction
-  ): Promise<boolean> => {
+  const handleAddTransaction = async (transaction: FormTransaction) => {
     try {
-      const response = await api.post('/transaction/create', data)
+      const response = await api.post('/transaction/create', transaction)
+      console.log(response.data)
       setTransactions(state => [...state, response.data])
       toast.success('Transação cadastrada com sucesso!')
       return true
