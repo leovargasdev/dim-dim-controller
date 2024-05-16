@@ -3,12 +3,9 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm, FormProvider } from 'react-hook-form'
 
 import { maskMoney } from 'utils/mask'
-import CATEGORIES_IN from 'data/transaction-in-categories'
-import CATEGORIES_OUT from 'data/transaction-out-categories'
-import TYPE_TRANSACTIONS from 'data/type-transactions'
+import { useTransactions } from 'hooks/useTransactions'
 import type { FormTransaction } from 'types/transaction'
 import { zodTransactionSchema, defaultValues } from 'utils/transaction'
-
 import {
   Autocomplete,
   CalendarPicker,
@@ -16,12 +13,13 @@ import {
   SelectCell
 } from 'components/Form'
 
+import CATEGORIES_IN from 'data/transaction-in-categories'
+import CATEGORIES_OUT from 'data/transaction-out-categories'
+import TYPE_TRANSACTIONS from 'data/type-transactions'
+
 import styles from './styles.module.scss'
-import { useTransactions } from 'hooks/useTransactions'
-import { useRouter } from 'next/router'
 
 const NewTransactionPage = () => {
-  const router = useRouter()
   const { transactions, addTransaction } = useTransactions()
 
   const useFormMethods = useForm<FormTransaction>({
@@ -31,12 +29,8 @@ const NewTransactionPage = () => {
   })
 
   const onSubmit = async (data: FormTransaction): Promise<void> => {
-    const isSuccess = await addTransaction(data)
-
-    // if (isSuccess) {
-    // useFormMethods.reset()
-    // router.push('/')
-    // }
+    await addTransaction(data)
+    useFormMethods.reset()
   }
 
   const onSelectAutocomplete = (transactionId: string): void => {

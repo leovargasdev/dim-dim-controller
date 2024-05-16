@@ -2,13 +2,14 @@ import { toast } from 'sonner'
 import { createContext, useContext, useEffect, useState } from 'react'
 
 import api from 'services/api'
+import { sortArray } from 'utils/array'
 import { getTransactions } from 'services/transactions'
 import { KEY_LOCAL_TRANSACTIONS } from 'utils/constants'
 import type { Transaction, FormTransaction } from 'types/transaction'
 
 export interface TransactionsContextData {
   transactions: Transaction[]
-  addTransaction: (goal: FormTransaction) => Promise<boolean>
+  addTransaction: (goal: FormTransaction) => Promise<void>
   optionFilter: string
   setOptionFilter: (option: string) => void
 }
@@ -36,10 +37,8 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
   const handleAddTransaction = async (transaction: FormTransaction) => {
     try {
       const response = await api.post('/transaction/create', transaction)
-      console.log(response.data)
-      setTransactions(state => [...state, response.data])
+      setTransactions(state => sortArray([...state, response.data], 'date'))
       toast.success('Transação cadastrada com sucesso!')
-      return true
     } catch (err) {
       console.log(err)
       toast.error('Ops... tivemos um problema!', {
@@ -47,8 +46,6 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
         duration: 5000
       })
     }
-
-    return false
   }
 
   return (

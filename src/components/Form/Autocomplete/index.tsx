@@ -1,4 +1,4 @@
-import { ChangeEvent, InputHTMLAttributes, useState } from 'react'
+import { ChangeEvent, InputHTMLAttributes, useMemo, useState } from 'react'
 import { useController, useFormContext } from 'react-hook-form'
 
 import type { Option } from 'types/global'
@@ -33,7 +33,13 @@ export const Autocomplete = ({
     field.onChange(event.target.value)
   }
 
-  const filtredOptions = searchValueInArray(options, 'name', field.value)
+  const filtredOptions = useMemo(() => {
+    if (field.value.length === 0) {
+      return []
+    }
+
+    return searchValueInArray(options, 'name', field.value)
+  }, [options, field.value])
 
   const handleSelectedOption = (option: Option): void => {
     onSelected(option.value)
@@ -49,7 +55,7 @@ export const Autocomplete = ({
         <div
           className={styles.content}
           aria-invalid={isError}
-          aria-expanded={!!field.value.length && !hasSelected}
+          aria-expanded={filtredOptions.length > 0 && !hasSelected}
         >
           <input id={name} {...rest} {...field} onChange={onChange} />
 

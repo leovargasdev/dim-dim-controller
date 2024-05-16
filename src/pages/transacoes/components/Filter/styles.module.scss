@@ -1,0 +1,38 @@
+.container {
+  display: flex;
+  column-gap: 16px;
+
+  margin-bottom: 32px;
+
+  button {
+    font-weight: 500;
+    text-transform: capitalize;
+
+    border-radius: 6px;
+    padding: 8px 32px; 
+    background: var(--background-secondary);
+
+    &.active {
+      color: var(--primary);
+      background: var(--link);
+    }
+  }
+
+  @media(max-width: 768px) {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 8px;
+
+    button {
+      padding: 10px 0; 
+      font-size: 0.875rem;
+    }
+  }
+
+  @media(max-width: 650px) {
+    button {
+      padding: 8px 0; 
+      font-size: 0.75rem;
+    }
+  }
+}

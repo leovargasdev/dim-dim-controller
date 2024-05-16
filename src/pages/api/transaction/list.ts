@@ -19,8 +19,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     const transactions = docs.map(doc => {
       const transaction = doc.data()
       const id = doc.id
-      const keyFilter = formatDate(transaction.date, 'MMMM-yyyy')
-      return { ...transaction, id, keyFilter }
+      const monthFilter = formatDate(transaction.date, 'MMMM-yyyy')
+      return { ...transaction, id, monthFilter }
     })
 
     return res.status(200).send(sortArray(transactions, 'date'))

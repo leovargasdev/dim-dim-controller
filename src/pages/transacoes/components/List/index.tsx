@@ -7,8 +7,8 @@ import { useTransactions } from 'hooks/useTransactions'
 
 import styles from './styles.module.scss'
 
-export const Transactions = () => {
-  const { transactions } = useTransactions()
+export const TransactionsList = () => {
+  const { transactions, optionFilter } = useTransactions()
 
   const formatedCurrency = (value: number) => {
     return new Intl.NumberFormat('pt-BR', {
@@ -37,6 +37,8 @@ export const Transactions = () => {
     )
   }
 
+  const list = transactions.filter(trans => trans.monthFilter === optionFilter)
+
   return (
     <table className={styles.table}>
       <thead>
@@ -52,7 +54,7 @@ export const Transactions = () => {
       </thead>
 
       <tbody>
-        {transactions.map(transaction => (
+        {list.map(transaction => (
           <tr key={transaction.id}>
             {tdTypeTransaction(transaction.type)}
             <td>{formatDate(transaction.date, "dd 'de' MMM. (iii)")}</td>
