@@ -3,7 +3,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm, FormProvider } from 'react-hook-form'
 
 import { maskMoney } from 'utils/mask'
-import { useTransactions } from 'hooks/useTransactions'
+import { useTransactions } from 'hooks'
 import type { FormTransaction } from 'types/transaction'
 import { zodTransactionSchema, defaultValues } from 'utils/transaction'
 import {
@@ -13,9 +13,9 @@ import {
   SelectCell
 } from 'components/Form'
 
+import TYPE_TRANSACTIONS from 'data/type-transactions'
 import CATEGORIES_IN from 'data/transaction-in-categories'
 import CATEGORIES_OUT from 'data/transaction-out-categories'
-import TYPE_TRANSACTIONS from 'data/type-transactions'
 
 import styles from './styles.module.scss'
 

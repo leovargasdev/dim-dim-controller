@@ -9,10 +9,11 @@ import type { Transaction, FormTransaction } from 'types/transaction'
 
 export interface TransactionsContextData {
   monthFilter: string
+  setMonthFilter: (month: string) => void
   transactions: Transaction[]
   transactionsFiltred: Transaction[]
-  setMonthFilter: (option: string) => void
-  addTransaction: (goal: FormTransaction) => Promise<void>
+  addTransaction: (transaction: FormTransaction) => Promise<void>
+  // onEditTransaction: (transaction: Transaction) => void
 }
 
 interface TransactionsProviderProps {
