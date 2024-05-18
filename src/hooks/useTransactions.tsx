@@ -31,9 +31,9 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
   //   return transactions.filter(trans => trans.monthFilter === monthFilter)
   // }, [transactions, monthFilter])
 
-  useEffect(() => {
-    getTransactions().then(setTransactions)
-  }, [])
+  // useEffect(() => {
+  //   getTransactions().then(setTransactions)
+  // }, [])
 
   useEffect(() => {
     if (transactions.length > 0) {

@@ -1,76 +1,68 @@
+import {
+  CheckIcon,
+  ChevronDownIcon,
+  ChevronUpIcon
+} from '@radix-ui/react-icons'
+import type { Option } from 'types/global'
 import * as SelectRadix from '@radix-ui/react-select'
-import { CheckCheck, ChevronDown, ChevronUp } from 'lucide-react'
+import { useController, useFormContext } from 'react-hook-form'
 
 import styles from './styles.module.scss'
 
-const SelectItem = ({ children, ...props }: any) => (
-  <SelectRadix.Item {...props}>
+const SelectItem = ({ children, ...rest }: SelectRadix.SelectItemProps) => (
+  <SelectRadix.Item {...rest} className={styles.item}>
     <SelectRadix.ItemText>{children}</SelectRadix.ItemText>
-    <SelectRadix.ItemIndicator className={styles.SelectItemIndicator}>
-      <CheckCheck />
+    <SelectRadix.ItemIndicator className={styles.item__indicator}>
+      <CheckIcon />
     </SelectRadix.ItemIndicator>
   </SelectRadix.Item>
 )
 
-export const Select = () => (
-  <fieldset className={styles.container}>
-    <label>Categoria</label>
-    <SelectRadix.Root>
-      <SelectRadix.Trigger className={styles.SelectTrigger} aria-label="Food">
-        <SelectRadix.Value placeholder="Selecione..." />
-        <SelectRadix.Icon className={styles.SelectIcon}>
-          <ChevronDown />
-        </SelectRadix.Icon>
-      </SelectRadix.Trigger>
-      <SelectRadix.Portal>
-        <SelectRadix.Content className={styles.SelectContent}>
-          <SelectRadix.ScrollUpButton className={styles.SelectScrollButton}>
-            <ChevronUp />
-          </SelectRadix.ScrollUpButton>
-          <SelectRadix.Viewport className={styles.SelectViewport}>
-            <SelectRadix.Group>
-              <SelectRadix.Label className={styles.SelectLabel}>
-                Fruits
-              </SelectRadix.Label>
-              <SelectItem value="apple">Apple</SelectItem>
-              <SelectItem value="banana">Banana</SelectItem>
-              <SelectItem value="blueberry">Blueberry</SelectItem>
-              <SelectItem value="grapes">Grapes</SelectItem>
-              <SelectItem value="pineapple">Pineapple</SelectItem>
-            </SelectRadix.Group>
+interface SelectProps {
+  options: Option[]
+  name: string
+  label: string
+}
 
-            <SelectRadix.Separator className={styles.SelectSeparator} />
+export const Select = ({ name, label, options }: SelectProps) => {
+  const { control } = useFormContext()
+  const { field } = useController({ name, control })
 
-            <SelectRadix.Group>
-              <SelectRadix.Label className={styles.SelectLabel}>
-                Vegetables
-              </SelectRadix.Label>
-              <SelectItem value="aubergine">Aubergine</SelectItem>
-              <SelectItem value="broccoli">Broccoli</SelectItem>
-              <SelectItem value="carrot" disabled>
-                Carrot
-              </SelectItem>
-              <SelectItem value="courgette">Courgette</SelectItem>
-              <SelectItem value="leek">Leek</SelectItem>
-            </SelectRadix.Group>
+  return (
+    <fieldset className={styles.container}>
+      <label>{label}</label>
+      <SelectRadix.Root
+        name={name}
+        value={field.value}
+        onValueChange={field.onChange}
+      >
+        <SelectRadix.Trigger className={styles.trigger}>
+          <SelectRadix.Value placeholder="Selecione..." />
+          <SelectRadix.Icon className={styles.SelectIcon}>
+            <ChevronDownIcon />
+          </SelectRadix.Icon>
+        </SelectRadix.Trigger>
 
-            <SelectRadix.Separator className={styles.SelectSeparator} />
+        <SelectRadix.Portal>
+          <SelectRadix.Content className={styles.content}>
+            <SelectRadix.ScrollUpButton className={styles.scroll__button}>
+              <ChevronUpIcon />
+            </SelectRadix.ScrollUpButton>
 
-            <SelectRadix.Group>
-              <SelectRadix.Label className={styles.SelectLabel}>
-                Meat
-              </SelectRadix.Label>
-              <SelectItem value="beef">Beef</SelectItem>
-              <SelectItem value="chicken">Chicken</SelectItem>
-              <SelectItem value="lamb">Lamb</SelectItem>
-              <SelectItem value="pork">Pork</SelectItem>
-            </SelectRadix.Group>
-          </SelectRadix.Viewport>
-          <SelectRadix.ScrollDownButton className={styles.SelectScrollButton}>
-            <ChevronDown />
-          </SelectRadix.ScrollDownButton>
-        </SelectRadix.Content>
-      </SelectRadix.Portal>
-    </SelectRadix.Root>
-  </fieldset>
-)
+            <SelectRadix.Viewport className={styles.viewport}>
+              {options.map(option => (
+                <SelectItem value={option.value} key={option.value}>
+                  {option.name}
+                </SelectItem>
+              ))}
+            </SelectRadix.Viewport>
+
+            <SelectRadix.ScrollDownButton className={styles.scroll__button}>
+              <ChevronDownIcon />
+            </SelectRadix.ScrollDownButton>
+          </SelectRadix.Content>
+        </SelectRadix.Portal>
+      </SelectRadix.Root>
+    </fieldset>
+  )
+}

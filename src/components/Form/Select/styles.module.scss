@@ -13,7 +13,7 @@
   color: var(--primary);
 }
 
-.SelectTrigger {
+.trigger {
   width: 100%;
   display: inline-flex;
   align-items: center;
@@ -24,33 +24,39 @@
   font-weight: 400;
 
   padding: 0 12px;
-  height: 48px;
+  height: 49px;
   border-radius: 6px;
   background: rgba(22, 23, 27, 0.3);
   border: 1px solid rgb(245, 245, 245, 0.1);
-  box-shadow: 0 2px 10px var(--black-a7);
+  box-shadow: 0 2px 10px hsl(206 22% 7% / 20%);
+
+  &[data-placeholder] {
+    color: #999;
+  }
 }
 
-.SelectTrigger[data-placeholder] {
-  color: #999;
-}
-
-.SelectIcon {
-  color: Var(--violet-11);
-}
-
-.SelectContent {
+.content {
   overflow: hidden;
-  background-color: white;
+  background-color: var(--background);
   border-radius: 6px;
   box-shadow: 0px 10px 38px -10px rgba(22, 23, 24, 0.35), 0px 10px 20px -15px rgba(22, 23, 24, 0.2);
+
+  .viewport {
+    padding: 6px;
+  }
+
+  .scroll__button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 25px;
+    background-color: var(--background-secondary);
+    color: var(--violet-11);
+    cursor: default;
+  }
 }
 
-.SelectViewport {
-  padding: 5px;
-}
-
-.SelectItem {
+.item {
   font-size: 13px;
   line-height: 1;
   color: var(--violet-11);
@@ -61,45 +67,24 @@
   padding: 0 35px 0 25px;
   position: relative;
   user-select: none;
-}
-.SelectItem[data-disabled] {
-  color: var(--mauve-8);
-  pointer-events: none;
-}
-.SelectItem[data-highlighted] {
-  outline: none;
-  background-color: var(--violet-9);
-  color: var(--violet-1);
-}
 
-.SelectLabel {
-  padding: 0 25px;
-  font-size: 12px;
-  line-height: 25px;
-  color: var(--mauve-11);
-}
+  &[data-disabled] {
+    color: pink;
+    pointer-events: none;
+  }
 
-.SelectSeparator {
-  height: 1px;
-  background-color: var(--violet-6);
-  margin: 5px;
-}
-
-.SelectItemIndicator {
-  position: absolute;
-  left: 0;
-  width: 25px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.SelectScrollButton {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 25px;
-  background-color: white;
-  color: var(--violet-11);
-  cursor: default;
+  &[data-highlighted] {
+    outline: none;
+    background-color: var(--link);
+    color: var(--violet-1);
+  }
+  
+  .item__indicator {
+    position: absolute;
+    left: 0;
+    width: 25px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
 }

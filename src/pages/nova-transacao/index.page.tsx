@@ -10,7 +10,6 @@ import {
   Autocomplete,
   CalendarPicker,
   Input,
-  Select,
   SelectCell
 } from 'components/Form'
 
@@ -74,18 +73,15 @@ const NewTransactionPage = () => {
                 label="Tipo de transação"
                 options={TYPE_TRANSACTIONS}
               />
-              <div className={styles.row}>
-                <Select />
 
-                <Input
-                  type="text"
-                  label="Valor"
-                  name="value"
-                  placeholder="R$ 0,00"
-                  maxLength={13}
-                  mask={maskMoney}
-                />
-              </div>
+              <Input
+                type="text"
+                label="Valor"
+                name="value"
+                placeholder="R$ 0,00"
+                maxLength={13}
+                mask={maskMoney}
+              />
 
               <Autocomplete
                 type="text"
@@ -97,7 +93,7 @@ const NewTransactionPage = () => {
               />
             </div>
 
-            {/* <CalendarPicker name="date" /> */}
+            <CalendarPicker name="date" />
           </div>
 
           <SelectCell name="category" options={categories} label="Categorias" />
