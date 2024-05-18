@@ -48,7 +48,7 @@ export const TransactionsResume = () => {
 
   return (
     <>
-      <span style={{ maxHeight: 300 }}>
+      {/* <span style={{ maxHeight: 300 }}>
         <ChartLine
           values={[70, 50, 80, 110, 50]}
           labels={['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta']}
@@ -56,7 +56,7 @@ export const TransactionsResume = () => {
       </span>
       <span style={{ maxHeight: 300 }}>
         <ChartDoughnut items={resumeCategories} />
-      </span>
+      </span> */}
       <section className={styles.container}>
         <article>
           <div className={styles.label}>

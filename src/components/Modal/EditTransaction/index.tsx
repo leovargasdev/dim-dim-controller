@@ -1,4 +1,6 @@
 import { useEffect } from 'react'
+import { addHours } from 'date-fns'
+import { useTransactions } from 'hooks'
 import * as Dialog from '@radix-ui/react-dialog'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm, FormProvider } from 'react-hook-form'
@@ -11,13 +13,13 @@ import {
   formatDate
 } from 'utils/format'
 import { Transaction } from 'types/transaction'
-import { Input, SelectCell } from 'components/Form'
+import { Input, Select } from 'components/Form'
 import { zodTransactionSchema } from 'utils/transaction'
 
 import styles from './styles.module.scss'
 import TYPE_TRANSACTIONS from 'data/type-transactions'
-import { useTransactions } from 'hooks'
-import { addHours } from 'date-fns'
+import CATEGORIES_IN from 'data/transaction-in-categories'
+import CATEGORIES_OUT from 'data/transaction-out-categories'
 
 interface Props {
   transaction: Transaction | null
@@ -30,6 +32,8 @@ export const ModalEditTransaction = ({ transaction, onClose }: Props) => {
     mode: 'onSubmit',
     resolver: zodResolver(zodTransactionSchema)
   })
+
+  const type = useFormMethods.watch('type')
 
   useEffect(() => {
     if (transaction) {
@@ -65,11 +69,20 @@ export const ModalEditTransaction = ({ transaction, onClose }: Props) => {
       <FormProvider {...useFormMethods}>
         <form onSubmit={useFormMethods.handleSubmit(onSubmit)}>
           <main className={`${styles.main} scroll`}>
-            <SelectCell
-              name="type"
-              label="Tipo de transação"
-              options={TYPE_TRANSACTIONS}
-            />
+            <div className={styles.row}>
+              <Select
+                name="type"
+                label="Tipo de transação"
+                options={TYPE_TRANSACTIONS}
+              />
+              {/* TODO */}
+              {/* monitorar o type para resetar o campo */}
+              <Select
+                name="category"
+                label="Categoria"
+                options={type === 'in' ? CATEGORIES_IN : CATEGORIES_OUT}
+              />
+            </div>
 
             <Input
               type="text"
