@@ -8,7 +8,6 @@ import {
   TShirt,
   FirstAidKit,
   ForkKnife,
-  User,
   GameController,
   PaintRoller,
   Television,
@@ -57,12 +56,6 @@ export default [
     value: 'outros',
     icon: <CirclesFour size={24} weight="regular" />,
     color: '#ffffff'
-  },
-  {
-    name: 'Pessoal',
-    value: 'pessoal',
-    icon: <User size={24} weight="regular" />,
-    color: '#27d5f8'
   },
   {
     name: 'Pet',

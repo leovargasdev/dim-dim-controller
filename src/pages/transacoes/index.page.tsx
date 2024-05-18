@@ -1,9 +1,5 @@
 import { NextPage } from 'next'
-import {
-  TransactionsFilter,
-  TransactionsList,
-  TransactionsResume
-} from './components'
+import { TransactionsList, TransactionsResume } from './components'
 
 import styles from './styles.module.scss'
 
