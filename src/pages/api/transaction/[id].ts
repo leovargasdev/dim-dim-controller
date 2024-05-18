@@ -12,15 +12,13 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       const transaction = req.body
       delete transaction.id
       await updateDoc(transactionRef, transaction)
-
-      return res.status(200).send({ ok: true })
     }
 
     if (req.method === 'DELETE') {
       await deleteDoc(transactionRef)
-
-      return res.status(200).send({ ok: true })
     }
+
+    return res.status(200).send({ ok: true })
   } catch (err) {
     console.log(err)
     return res.status(500).send('Internal Server Error')

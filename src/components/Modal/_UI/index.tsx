@@ -3,13 +3,18 @@ import * as Dialog from '@radix-ui/react-dialog'
 
 import styles from './styles.module.scss'
 
-interface Props extends Dialog.DialogProps {
+export interface ModalProps extends Dialog.DialogProps {
   title: string
   description: string
   children: React.ReactNode
 }
 
-export const Modal = ({ title, description, children, ...rest }: Props) => (
+export const Modal = ({
+  title,
+  description,
+  children,
+  ...rest
+}: ModalProps) => (
   <Dialog.Root {...rest}>
     <Dialog.Portal>
       <Dialog.Overlay className={styles.overlay} />
@@ -25,6 +30,21 @@ export const Modal = ({ title, description, children, ...rest }: Props) => (
           </Dialog.DialogClose>
         </header>
 
+        {children}
+      </Dialog.Content>
+    </Dialog.Portal>
+  </Dialog.Root>
+)
+
+export interface ModalSimpleProps extends Dialog.DialogProps {
+  children: React.ReactNode
+}
+
+export const ModalSimple = ({ children, ...rest }: ModalSimpleProps) => (
+  <Dialog.Root {...rest}>
+    <Dialog.Portal>
+      <Dialog.Overlay className={styles.overlay} />
+      <Dialog.Content className={styles.container} data-size="small">
         {children}
       </Dialog.Content>
     </Dialog.Portal>

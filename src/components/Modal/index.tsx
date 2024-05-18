@@ -1,2 +1,3 @@
-export { Modal } from './_UI'
-export { ModalEditTransaction } from './ModalEdit'
+export * from './_UI'
+export { ModalEditTransaction } from './EditTransaction'
+export { ModalGenericAction } from './GenericAction'

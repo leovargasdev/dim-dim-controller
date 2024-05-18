@@ -18,6 +18,10 @@
   max-width: 752px;
   border-radius: 8px;
   background: var(--background);
+
+  &[data-size="small"] {
+    max-width: 400px;
+  }
 }
 
 .header {

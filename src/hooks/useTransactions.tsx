@@ -13,7 +13,8 @@ export interface TransactionsContextData {
   transactions: Transaction[]
   transactionsFiltred: Transaction[]
   addTransaction: (transaction: FormTransaction) => Promise<void>
-  onEditTransaction: (transaction: Transaction) => void
+  handleEditTransaction: (transaction: Transaction) => void
+  handleRemoveTransaction: (transactionId: string) => void
 }
 
 interface TransactionsProviderProps {
@@ -25,6 +26,10 @@ const TransactionsContext = createContext({} as TransactionsContextData)
 export function TransactionsProvider({ children }: TransactionsProviderProps) {
   const [monthFilter, setMonthFilter] = useState<string>('')
   const [transactions, setTransactions] = useState<Transaction[]>([])
+
+  const transactionsFiltred = useMemo(() => {
+    return transactions.filter(trans => trans.monthFilter === monthFilter)
+  }, [transactions, monthFilter])
 
   useEffect(() => {
     getTransactions().then(setTransactions)
@@ -50,11 +55,22 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
     }
   }
 
-  const transactionsFiltred = useMemo(() => {
-    return transactions.filter(trans => trans.monthFilter === monthFilter)
-  }, [transactions, monthFilter])
+  const handleRemoveTransaction = async (transactionId: string) => {
+    try {
+      await api.delete('/transaction/' + transactionId)
 
-  const onEditTransaction = async (transaction: Transaction) => {
+      setTransactions(state => state.filter(t => t.id !== transactionId))
+      toast.success('Transação removida com sucesso!')
+    } catch (err) {
+      console.log(err)
+      toast.error('Ops... tivemos um problema!', {
+        description: 'Falha ao remover transação',
+        duration: 5000
+      })
+    }
+  }
+
+  const handleEditTransaction = async (transaction: Transaction) => {
     await api.put('/transaction/' + transaction.id, transaction)
 
     setTransactions(state =>
@@ -73,7 +89,8 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
         transactions,
         addTransaction: handleAddTransaction,
         transactionsFiltred,
-        onEditTransaction
+        handleEditTransaction,
+        handleRemoveTransaction
       }}
     >
       {children}

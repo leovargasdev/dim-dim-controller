@@ -14,7 +14,7 @@ export const TransactionsFilter = () => {
     const months = new Set()
     transactions.map(trans => months.add(trans.monthFilter))
 
-    const result = Array.from(months).reverse() as string[]
+    const result = Array.from(months) as string[]
     !monthFilter && setMonthFilter(result[0])
 
     return result

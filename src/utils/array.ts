@@ -15,7 +15,7 @@ export const sortArray = (data: any[], propName: string): any[] => {
   if (propName === 'date') {
     return data.sort(
       (itemA, itemB) =>
-        new Date(itemA.date).getTime() - new Date(itemB.date).getTime()
+        new Date(itemB.date).getTime() - new Date(itemA.date).getTime()
     )
   }
 

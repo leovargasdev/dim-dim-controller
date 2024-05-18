@@ -25,7 +25,7 @@ interface Props {
 }
 
 export const ModalEditTransaction = ({ transaction, onClose }: Props) => {
-  const { onEditTransaction } = useTransactions()
+  const { handleEditTransaction } = useTransactions()
   const useFormMethods = useForm<Transaction>({
     mode: 'onSubmit',
     resolver: zodResolver(zodTransactionSchema)
@@ -43,7 +43,7 @@ export const ModalEditTransaction = ({ transaction, onClose }: Props) => {
 
   const onSubmit = async (data: any): Promise<void> => {
     if (transaction) {
-      await onEditTransaction({
+      await handleEditTransaction({
         ...data,
         id: transaction.id,
         value: convertCurrencyToFloat(data.value),
@@ -93,13 +93,17 @@ export const ModalEditTransaction = ({ transaction, onClose }: Props) => {
           </main>
 
           <footer className={styles.footer}>
-            <Dialog.DialogClose className="button secondary">
+            <Dialog.DialogClose
+              disabled={isLoading}
+              className="button secondary"
+            >
               Cancelar
             </Dialog.DialogClose>
             <button
               type="submit"
+              className="button"
               disabled={isLoading}
-              className={`button ${isLoading ? 'loading' : ''}`}
+              data-state={isLoading ? 'loading' : 'read'}
             >
               Confirmar
             </button>
