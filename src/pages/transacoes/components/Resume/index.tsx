@@ -1,19 +1,24 @@
+import { useTransactions } from 'hooks/useTransactions'
+import { formatDate, formatNumberToCurrency } from 'utils/format'
 import { HandCoins, CreditCard, PiggyBank } from '@phosphor-icons/react'
 
 import styles from './styles.module.scss'
-import { useTransactions } from 'hooks/useTransactions'
-import { formatNumberToCurrency } from 'utils/format'
+
+const currentMonth = formatDate(new Date(), 'MMMM-yyyy')
 
 export const TransactionsResume = () => {
   const { transactions } = useTransactions()
 
   const resume = transactions.reduce(
-    (acc, trans) => {
-      if (trans.type === 'in') {
-        return { out: acc.out, in: acc.in + trans.value }
-      }
+    (acc, transaction) => {
+      if (transaction.monthFilter === currentMonth) {
+        if (transaction.type === 'in') {
+          return { ...acc, in: acc.in + transaction.value }
+        }
 
-      return { in: acc.in, out: acc.out + trans.value }
+        return { ...acc, out: acc.out + transaction.value }
+      }
+      return acc
     },
     { in: 0, out: 0 }
   )
@@ -25,12 +30,8 @@ export const TransactionsResume = () => {
           <h2>Receita total(mês)</h2>
           <HandCoins size={32} />
         </div>
-        <div>
-          <strong>{formatNumberToCurrency(resume.in)}</strong>
-          <p>
-            <span>+4%</span> em relação ao mês passado
-          </p>
-        </div>
+
+        <strong>{formatNumberToCurrency(resume.in)}</strong>
       </article>
 
       <article>
@@ -38,12 +39,8 @@ export const TransactionsResume = () => {
           <h2>Despesa total(mês)</h2>
           <CreditCard size={32} />
         </div>
-        <div>
-          <strong>{formatNumberToCurrency(resume.out)}</strong>
-          <p>
-            <span>+4%</span> em relação ao mês passado
-          </p>
-        </div>
+
+        <strong>{formatNumberToCurrency(resume.out)}</strong>
       </article>
 
       <article>
@@ -51,12 +48,8 @@ export const TransactionsResume = () => {
           <h2>Saldo (mês)</h2>
           <PiggyBank size={32} />
         </div>
-        <div>
-          <strong>{formatNumberToCurrency(resume.in - resume.out)}</strong>
-          <p>
-            <span>+4%</span> em relação ao mês passado
-          </p>
-        </div>
+
+        <strong>{formatNumberToCurrency(resume.in - resume.out)}</strong>
       </article>
     </section>
   )
