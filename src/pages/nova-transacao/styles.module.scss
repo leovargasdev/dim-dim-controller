@@ -9,6 +9,11 @@
   background: var(--background-secondary);
 }
 
+.row {
+  display: flex;
+  gap: 24px;
+}
+
 .main {
   display: flex;
   flex-direction: column;
