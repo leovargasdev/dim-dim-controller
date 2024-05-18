@@ -13,7 +13,7 @@ export const Header = () => (
       <span className={styles.separator} />
 
       <nav className={styles.menu}>
-        <Link href="/">Inicio</Link>
+        <Link href="/transacoes">Inicio</Link>
         <Link href="/nova-transacao">Nova transação</Link>
         <Link href="/nova-transacao">Relatorios</Link>
       </nav>

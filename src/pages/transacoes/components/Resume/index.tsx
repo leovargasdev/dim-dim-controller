@@ -18,8 +18,6 @@ export const TransactionsResume = () => {
     { in: 0, out: 0 }
   )
 
-  console.log(resume)
-
   return (
     <section className={styles.container}>
       <article>

@@ -10,5 +10,9 @@ const config = {
   appId: env.FIREBASE_APP_ID
 }
 
+export const DB_NAMES = {
+  transactions: 'transactions'
+}
+
 const app = initializeApp(config)
 export const db = getFirestore(app)

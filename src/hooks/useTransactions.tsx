@@ -13,7 +13,7 @@ export interface TransactionsContextData {
   transactions: Transaction[]
   transactionsFiltred: Transaction[]
   addTransaction: (transaction: FormTransaction) => Promise<void>
-  // onEditTransaction: (transaction: Transaction) => void
+  onEditTransaction: (transaction: Transaction) => void
 }
 
 interface TransactionsProviderProps {
@@ -54,14 +54,26 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
     return transactions.filter(trans => trans.monthFilter === monthFilter)
   }, [transactions, monthFilter])
 
+  const onEditTransaction = async (transaction: Transaction) => {
+    await api.put('/transaction/' + transaction.id, transaction)
+
+    setTransactions(state =>
+      state.map(t => {
+        const isUpdate = t.id === transaction.id
+        return isUpdate ? { ...t, ...transaction } : t
+      })
+    )
+  }
+
   return (
     <TransactionsContext.Provider
       value={{
         monthFilter,
+        setMonthFilter,
         transactions,
         addTransaction: handleAddTransaction,
         transactionsFiltred,
-        setMonthFilter
+        onEditTransaction
       }}
     >
       {children}

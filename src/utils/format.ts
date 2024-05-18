@@ -18,11 +18,16 @@ export const formatDate = (
   return ''
 }
 
-export const formatCurrencyToFloat = (value: string): number => {
+export const convertCurrencyToFloat = (value: string): number => {
   let [numeral, cents] = value.split(',')
   numeral = maskOnlyNumber(numeral)
 
   return parseFloat(numeral + '.' + cents)
+}
+
+export const convertFloatToCurrency = (currency: number) => {
+  const config = { currency: 'BRL', style: 'currency' }
+  return new Intl.NumberFormat('pt-BR', config).format(currency)
 }
 
 export const normalizeString = (value: string): string => {

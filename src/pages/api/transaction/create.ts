@@ -1,11 +1,9 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { collection, addDoc } from 'firebase/firestore/lite'
 
-import { db } from 'services/firebase'
+import { db, DB_NAMES } from 'services/firebase'
 import { zodTransactionSchema } from 'utils/transaction'
-import { formatCurrencyToFloat, formatDate } from 'utils/format'
-
-const NAME_COLLECTION = 'transactions'
+import { convertCurrencyToFloat, formatDate } from 'utils/format'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   try {
@@ -14,12 +12,12 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
       const transaction = {
         ...data,
-        date: new Date(data.date).toString(),
-        created_at: new Date().toString(),
-        value: formatCurrencyToFloat(data.value)
+        date: new Date(data.date),
+        created_at: new Date(),
+        value: convertCurrencyToFloat(data.value)
       }
 
-      const transactionsCollection = collection(db, NAME_COLLECTION)
+      const transactionsCollection = collection(db, DB_NAMES.transactions)
       const { id } = await addDoc(transactionsCollection, transaction)
 
       const monthFilter = formatDate(transaction.date, 'MMMM-yyyy')
