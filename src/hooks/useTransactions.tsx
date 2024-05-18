@@ -1,5 +1,5 @@
 import { toast } from 'sonner'
-import { createContext, useContext, useEffect, useMemo, useState } from 'react'
+import { createContext, useContext, useEffect, useState } from 'react'
 
 import api from 'services/api'
 import { sortArray } from 'utils/array'
@@ -11,7 +11,7 @@ export interface TransactionsContextData {
   monthFilter: string
   setMonthFilter: (month: string) => void
   transactions: Transaction[]
-  transactionsFiltred: Transaction[]
+  // transactionsFiltred: Transaction[]
   addTransaction: (transaction: FormTransaction) => Promise<void>
   handleEditTransaction: (transaction: Transaction) => void
   handleRemoveTransaction: (transactionId: string) => void
@@ -27,9 +27,9 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
   const [monthFilter, setMonthFilter] = useState<string>('')
   const [transactions, setTransactions] = useState<Transaction[]>([])
 
-  const transactionsFiltred = useMemo(() => {
-    return transactions.filter(trans => trans.monthFilter === monthFilter)
-  }, [transactions, monthFilter])
+  // const transactionsFiltred = useMemo(() => {
+  //   return transactions.filter(trans => trans.monthFilter === monthFilter)
+  // }, [transactions, monthFilter])
 
   useEffect(() => {
     getTransactions().then(setTransactions)
@@ -88,7 +88,6 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
         setMonthFilter,
         transactions,
         addTransaction: handleAddTransaction,
-        transactionsFiltred,
         handleEditTransaction,
         handleRemoveTransaction
       }}

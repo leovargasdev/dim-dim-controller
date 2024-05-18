@@ -5,7 +5,7 @@ import { useTransactions } from 'hooks/useTransactions'
 import { formatNumberToCurrency } from 'utils/format'
 
 export const TransactionsResume = () => {
-  const { transactionsFiltred: transactions } = useTransactions()
+  const { transactions } = useTransactions()
 
   const resume = transactions.reduce(
     (acc, trans) => {

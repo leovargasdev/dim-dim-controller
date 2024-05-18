@@ -28,7 +28,7 @@ interface Action {
 }
 
 export const TransactionsList = () => {
-  const { transactionsFiltred, handleRemoveTransaction } = useTransactions()
+  const { transactions, handleRemoveTransaction } = useTransactions()
 
   const [loadingRemove, setLoadingRemove] = useState<boolean>(false)
   const [action, setAction] = useState<Action>({ type: '', transaction: null })
@@ -65,7 +65,7 @@ export const TransactionsList = () => {
         <TableHead />
 
         <tbody>
-          {transactionsFiltred.map(transaction => {
+          {transactions.map(transaction => {
             const isRevenue = transaction.type === 'in'
             return (
               <tr key={transaction.id}>

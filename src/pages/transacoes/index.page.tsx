@@ -10,7 +10,7 @@ import styles from './styles.module.scss'
 const TransactionsPage: NextPage = () => (
   <div className={styles.container}>
     <TransactionsResume />
-    <TransactionsFilter />
+    {/* <TransactionsFilter /> */}
     <TransactionsList />
   </div>
 )
