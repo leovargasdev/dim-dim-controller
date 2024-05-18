@@ -3,7 +3,7 @@ import { CaretDown, CaretUp, Pencil, Trash } from '@phosphor-icons/react'
 
 import { useTransactions } from 'hooks'
 import type { Transaction } from 'types/transaction'
-import { formatDate, formatNumberToCurrency } from 'utils/format'
+import { formatDate, convertFloatToCurrency } from 'utils/format'
 import { Tooltip, ModalEditTransaction, ModalGenericAction } from 'components'
 
 import styles from './styles.module.scss'
@@ -77,7 +77,7 @@ export const TransactionsList = () => {
                 </td>
                 <td>{formatDate(transaction.date, "dd 'de' MMM. (iii)")}</td>
                 <td>{transaction.name}</td>
-                <td>{formatNumberToCurrency(transaction.value)}</td>
+                <td>{convertFloatToCurrency(transaction.value)}</td>
                 <td>{transaction.category}</td>
                 <td className={styles.action}>
                   <Tooltip text="Editar transação">

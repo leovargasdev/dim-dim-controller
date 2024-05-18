@@ -36,10 +36,3 @@ export const normalizeString = (value: string): string => {
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '')
 }
-
-export const formatNumberToCurrency = (value: number) => {
-  return new Intl.NumberFormat('pt-BR', {
-    style: 'currency',
-    currency: 'BRL'
-  }).format(value)
-}

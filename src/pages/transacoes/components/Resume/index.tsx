@@ -1,5 +1,5 @@
 import { useTransactions } from 'hooks/useTransactions'
-import { formatDate, formatNumberToCurrency } from 'utils/format'
+import { formatDate, convertFloatToCurrency } from 'utils/format'
 import { HandCoins, CreditCard, PiggyBank } from '@phosphor-icons/react'
 
 import styles from './styles.module.scss'
@@ -31,7 +31,7 @@ export const TransactionsResume = () => {
           <HandCoins size={32} />
         </div>
 
-        <strong>{formatNumberToCurrency(resume.in)}</strong>
+        <strong>{convertFloatToCurrency(resume.in)}</strong>
       </article>
 
       <article>
@@ -40,7 +40,7 @@ export const TransactionsResume = () => {
           <CreditCard size={32} />
         </div>
 
-        <strong>{formatNumberToCurrency(resume.out)}</strong>
+        <strong>{convertFloatToCurrency(resume.out)}</strong>
       </article>
 
       <article>
@@ -49,7 +49,7 @@ export const TransactionsResume = () => {
           <PiggyBank size={32} />
         </div>
 
-        <strong>{formatNumberToCurrency(resume.in - resume.out)}</strong>
+        <strong>{convertFloatToCurrency(resume.in - resume.out)}</strong>
       </article>
     </section>
   )
