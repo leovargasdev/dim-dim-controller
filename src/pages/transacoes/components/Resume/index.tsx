@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import { HandCoins, CreditCard, PiggyBank } from '@phosphor-icons/react'
 
-import { ChartDoughnut } from 'components'
+import { ChartDoughnut, ChartLine } from 'components'
 import { useTransactions } from 'hooks/useTransactions'
 import CATEGORIES from 'data/transaction-out-categories'
 import { formatDate, convertFloatToCurrency } from 'utils/format'
@@ -48,7 +48,15 @@ export const TransactionsResume = () => {
 
   return (
     <>
-      <ChartDoughnut items={resumeCategories} />
+      <span style={{ maxHeight: 300 }}>
+        <ChartLine
+          values={[70, 50, 80, 110, 50]}
+          labels={['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta']}
+        />
+      </span>
+      <span style={{ maxHeight: 300 }}>
+        <ChartDoughnut items={resumeCategories} />
+      </span>
       <section className={styles.container}>
         <article>
           <div className={styles.label}>

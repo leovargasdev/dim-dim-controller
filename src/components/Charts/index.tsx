@@ -1,1 +1,2 @@
-export { ChartDoughnut } from './Doughnut'
+export { ChartDoughnut } from './doughnut'
+export { ChartLine } from './line'
