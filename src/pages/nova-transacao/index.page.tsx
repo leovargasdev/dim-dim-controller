@@ -18,6 +18,7 @@ import CATEGORIES_IN from 'data/transaction-in-categories'
 import CATEGORIES_OUT from 'data/transaction-out-categories'
 
 import styles from './styles.module.scss'
+import { convertFloatToCurrency } from 'utils/format'
 
 const NewTransactionPage = () => {
   const { transactions, addTransaction } = useTransactions()
@@ -30,15 +31,21 @@ const NewTransactionPage = () => {
 
   const onSubmit = async (data: FormTransaction): Promise<void> => {
     await addTransaction(data)
-    useFormMethods.reset()
+    useFormMethods.setValue('name', '')
+    useFormMethods.setValue('value', '')
   }
 
   const onSelectAutocomplete = (transactionId: string): void => {
     const transaction = transactions.find(t => t.id === transactionId)
 
     if (transaction) {
-      useFormMethods.setValue('category', transaction.category)
+      const value = convertFloatToCurrency(transaction.value)
+      useFormMethods.setValue('value', value)
       useFormMethods.setValue('type', transaction.type)
+      setTimeout(
+        () => useFormMethods.setValue('category', transaction.category),
+        500
+      )
     }
   }
 
@@ -74,15 +81,6 @@ const NewTransactionPage = () => {
                 options={TYPE_TRANSACTIONS}
               />
 
-              <Input
-                type="text"
-                label="Valor"
-                name="value"
-                placeholder="R$ 0,00"
-                maxLength={13}
-                mask={maskMoney}
-              />
-
               <Autocomplete
                 type="text"
                 name="name"
@@ -90,6 +88,15 @@ const NewTransactionPage = () => {
                 placeholder="Descrição"
                 onSelected={onSelectAutocomplete}
                 options={transactions.map(t => ({ name: t.name, value: t.id }))}
+              />
+
+              <Input
+                type="text"
+                label="Valor"
+                name="value"
+                placeholder="R$ 0,00"
+                maxLength={13}
+                mask={maskMoney}
               />
             </div>
 
