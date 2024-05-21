@@ -1,6 +1,6 @@
 .container {
   display: grid;
-  grid-template-columns: 1fr 700px;
+  grid-template-columns: 1fr 750px;
   align-items: flex-start;
   gap: 24px;
 }
@@ -13,13 +13,16 @@
   padding: 20px 28px;
   border-radius: 12px;
   border: 1px solid var(--border);
+
+  .chart__doughnut {
+    margin: -42px 0 -64px;
+  }
 }
 
 .info {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   z-index: 2;
-  margin-bottom: -42px;
 
   p, strong {
     display: block;

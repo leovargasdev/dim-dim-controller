@@ -3,7 +3,7 @@ import { useMemo } from 'react'
 import { differenceInCalendarDays } from 'date-fns'
 
 import { ViewList } from './components'
-import { ChartDoughnut } from 'components'
+import { ChartDoughnut, ChartLine } from 'components'
 
 import { useTransactions } from 'hooks'
 import CATEGORIES from 'data/transaction-out-categories'
@@ -11,8 +11,18 @@ import { convertFloatToCurrency, formatDate } from 'utils/format'
 
 import styles from './styles.module.scss'
 
-const today = new Date('05-19-24')
+const today = new Date()
 const currentMonth = formatDate(today, 'MMMM-yyyy')
+const currenteDay = today.getDay() + 1
+const daysInWeekly = [
+  'Domingo',
+  'Segunda',
+  'Terça',
+  'Quarta',
+  'Quinta',
+  'Sexta',
+  'Sabado'
+]
 
 const TransactionsPage: NextPage = () => {
   const { transactions } = useTransactions()
@@ -44,16 +54,21 @@ const TransactionsPage: NextPage = () => {
     const data = transactionsOutInCurrentMonth.reduce(
       (acc, transaction) => {
         const { date, value } = transaction
-        const { daily, weekly, monthly } = acc
+        const { daily, weekly, monthly, lastSevenDays } = acc
         const distance = differenceInCalendarDays(today, date)
+
+        if (distance < 7) {
+          lastSevenDays[distance] = lastSevenDays[distance] + value
+        }
 
         return {
           daily: distance === 0 ? daily + value : daily,
           weekly: distance <= 7 ? weekly + value : weekly,
-          monthly: distance <= 30 ? monthly + value : monthly
+          monthly: distance <= 30 ? monthly + value : monthly,
+          lastSevenDays
         }
       },
-      { daily: 0, weekly: 0, monthly: 0 }
+      { daily: 0, weekly: 0, monthly: 0, lastSevenDays: [0, 0, 0, 0, 0, 0, 0] }
     )
 
     return data
@@ -81,7 +96,18 @@ const TransactionsPage: NextPage = () => {
           </div>
         </div>
 
-        <ChartDoughnut items={resumeCategories} />
+        <span className={styles.chart__doughnut}>
+          <ChartDoughnut items={resumeCategories} />
+        </span>
+
+        <span style={{ height: 350 }}>
+          <ChartLine
+            values={resume.lastSevenDays.reverse()}
+            labels={daysInWeekly
+              .slice(currenteDay)
+              .concat(daysInWeekly.slice(0, currenteDay))}
+          />
+        </span>
       </section>
     </div>
   )
