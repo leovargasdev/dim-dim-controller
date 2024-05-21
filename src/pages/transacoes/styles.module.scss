@@ -1,5 +1,36 @@
 .container {
+  display: grid;
+  grid-template-columns: 1fr 700px;
+  align-items: flex-start;
+  gap: 24px;
+}
+
+.resume {
   display: flex;
   flex-direction: column;
-  row-gap: 24px;
+
+  width: 100%;
+  padding: 20px 28px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+}
+
+.info {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  z-index: 2;
+  margin-bottom: -42px;
+
+  p, strong {
+    display: block;
+  }
+
+  p {
+    color: var(--secondary);
+    font-size: 18px;
+  }
+
+  strong {
+    font-size: 28px;
+  }
 }

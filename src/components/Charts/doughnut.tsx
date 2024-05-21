@@ -19,10 +19,10 @@ export const ChartDoughnut = ({ items }: ChartDoughnutProps) => (
       datasets: [
         {
           // @ts-ignores
-          cutout: '80%',
+          cutout: '70%',
           label: ' ',
-          borderWidth: 0,
           hoverOffset: 4,
+          borderWidth: 0,
           data: items.map(item => item.value),
           backgroundColor: items.map(item => item.color)
         }
@@ -34,7 +34,7 @@ export const ChartDoughnut = ({ items }: ChartDoughnutProps) => (
           display: true,
           position: 'right',
           labels: {
-            padding: 16,
+            padding: 24,
             color: '#FAFAF9',
             font: { size: 15 }
           }

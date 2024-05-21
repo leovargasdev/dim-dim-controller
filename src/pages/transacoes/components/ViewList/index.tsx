@@ -1,5 +1,11 @@
 import { useState } from 'react'
-import { CaretDown, CaretUp, Pencil, Trash } from '@phosphor-icons/react'
+import {
+  CaretDown,
+  CaretUp,
+  GameController,
+  Pencil,
+  Trash
+} from '@phosphor-icons/react'
 
 import { useTransactions } from 'hooks'
 import type { Transaction } from 'types/transaction'
@@ -8,26 +14,12 @@ import { Tooltip, ModalEditTransaction, ModalGenericAction } from 'components'
 
 import styles from './styles.module.scss'
 
-const TableHead = () => (
-  <thead>
-    <tr>
-      <th />
-      <th>Data</th>
-      <th>Descrição</th>
-      <th>Valor</th>
-      <th>Categoria</th>
-      <th />
-      <th />
-    </tr>
-  </thead>
-)
-
 interface Action {
   type: 'edit' | 'remove' | ''
   transaction: Transaction | null
 }
 
-export const TransactionsList = () => {
+export const ViewList = () => {
   const { transactions, handleRemoveTransaction } = useTransactions()
 
   const [loadingRemove, setLoadingRemove] = useState<boolean>(false)
@@ -61,25 +53,37 @@ export const TransactionsList = () => {
         transaction={action.type === 'edit' ? action.transaction : null}
       />
 
-      <table className={styles.table}>
-        <TableHead />
-
-        <tbody>
+      <section className={styles.container}>
+        {/* <h1>Lista de transações</h1> */}
+        <div className={styles.content}>
           {transactions.map(transaction => {
             const isRevenue = transaction.type === 'in'
+
             return (
-              <tr key={transaction.id}>
-                <td>
+              <div key={transaction.id} className={styles.item}>
+                <span className={styles.item__type}>
                   <Tooltip text={isRevenue ? 'Receita' : 'Despesa'}>
                     {/* eslint-disable-next-line prettier/prettier */}
                     {isRevenue ? <CaretUp size={16} weight="bold" fill="var(--green)" /> : <CaretDown size={16} weight="bold" fill="var(--red)" />}
                   </Tooltip>
-                </td>
-                <td>{formatDate(transaction.date, "dd 'de' MMM. (iii)")}</td>
-                <td>{transaction.name}</td>
-                <td>{convertFloatToCurrency(transaction.value)}</td>
-                <td>{transaction.category}</td>
-                <td className={styles.action}>
+                </span>
+
+                <span className={styles.item__icon}>
+                  <GameController size={18} weight="regular" />
+                </span>
+
+                <div className={styles.item__info}>
+                  <strong>{transaction.name}</strong>
+                  <time dateTime={transaction.date as never}>
+                    {formatDate(transaction.date, "dd 'de' MMM. (iii)")}
+                  </time>
+                </div>
+
+                <span className={styles.item__value}>
+                  {convertFloatToCurrency(transaction.value)}
+                </span>
+
+                <div className={styles.item__actions}>
                   <Tooltip text="Editar transação">
                     <button
                       type="button"
@@ -89,8 +93,7 @@ export const TransactionsList = () => {
                       <Pencil size={14} fill="var(--secondary)" />
                     </button>
                   </Tooltip>
-                </td>
-                <td className={styles.action}>
+
                   <Tooltip text="Remover transação">
                     <button
                       type="button"
@@ -100,12 +103,12 @@ export const TransactionsList = () => {
                       <Trash size={16} fill="var(--secondary)" />
                     </button>
                   </Tooltip>
-                </td>
-              </tr>
+                </div>
+              </div>
             )
           })}
-        </tbody>
-      </table>
+        </div>
+      </section>
     </>
   )
 }

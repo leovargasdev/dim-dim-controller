@@ -1,3 +1,4 @@
 export { TransactionsResume } from './Resume'
 export { TransactionsFilter } from './Filter'
-export { TransactionsList } from './List'
+export { ViewList } from './ViewList'
+export { ViewTable } from './ViewTable'
