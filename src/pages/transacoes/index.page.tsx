@@ -1,14 +1,14 @@
+import { useMemo } from 'react'
 import { NextPage } from 'next'
 
-import { ViewList } from './components'
+import { useTransactions } from 'hooks'
+import { formatDate } from 'utils/format'
+import CATEGORIES from 'data/transaction-out-categories'
+
 import { ChartDoughnut } from 'components'
-import { Header } from './components/Header'
+import { ViewList, TransactionsHeader } from './components'
 
 import styles from './styles.module.scss'
-import { useTransactions } from 'hooks'
-import { useMemo } from 'react'
-import CATEGORIES from 'data/transaction-out-categories'
-import { formatDate } from 'utils/format'
 
 const today = new Date()
 const currentMonth = formatDate(today, 'MMMM-yyyy')
@@ -41,7 +41,7 @@ const TransactionsPage: NextPage = () => {
 
   return (
     <>
-      <Header />
+      <TransactionsHeader />
 
       <div className={styles.list_and_doughnut}>
         <ViewList />

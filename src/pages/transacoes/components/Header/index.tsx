@@ -1,11 +1,9 @@
-import { NextPage } from 'next'
 import { useMemo } from 'react'
 import { differenceInCalendarDays } from 'date-fns'
 
 import { ChartLine } from 'components'
 
 import { useTransactions } from 'hooks'
-import CATEGORIES from 'data/transaction-out-categories'
 import { convertFloatToCurrency, formatDate } from 'utils/format'
 
 import styles from './styles.module.scss'
@@ -23,31 +21,11 @@ const daysInWeekly = [
   'Sabado'
 ]
 
-export const Header = () => {
+export const TransactionsHeader = () => {
   const { transactions } = useTransactions()
   const transactionsOutInCurrentMonth = transactions.filter(
     t => t.monthFilter === currentMonth && t.type === 'out'
   )
-
-  const resumeCategories = useMemo(() => {
-    const sumCategories = transactionsOutInCurrentMonth.reduce(
-      (acc: Record<string, number>, transaction) => {
-        const { value, category } = transaction
-
-        return {
-          ...acc,
-          [category]: !acc[category] ? value : acc[category] + value
-        }
-      },
-      {}
-    )
-
-    return CATEGORIES.map(category => ({
-      name: category.name,
-      color: category.color,
-      value: sumCategories[category.value]
-    })).filter(category => category.value > 0)
-  }, [transactionsOutInCurrentMonth, CATEGORIES])
 
   const resume = useMemo(() => {
     const data = transactionsOutInCurrentMonth.reduce(
