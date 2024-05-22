@@ -1,5 +1,6 @@
 @import './components/button.scss';
 @import './components/scroll.scss';
+@import './components/card.scss';
 
 * {
   margin: 0;
@@ -8,12 +9,16 @@
 }
 
 :root {
-  --background: #1f1f1e;
-  --background-secondary: #1F2326;
-  --border: #292524;
+  --background: #F4F4F7;
+  --background-secondary: #fff;
+  --background-terciary: #1C2634;
+  --border: #e0dddd;
 
-  --primary: #FAFAF9;
-  --secondary: #A8A29E;
+  --text-dark: #2D2D2D;
+  --text-dark-secondary: #6B6B6B;
+
+  --text-white: #f1f1f1;
+  --text-white-secondary: #B3B5BC;
 
   --link: #3B82F6;
   --green: #24B357;

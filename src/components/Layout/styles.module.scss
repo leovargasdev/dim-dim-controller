@@ -1,14 +1,22 @@
 .container {
   display: flex;
   flex-direction: column;
-  row-gap: 24px;
+  align-items: center;
+  row-gap: 54px;
 
   width: 100%;
 
-  main {
+  > header, > main {
+    padding: 0 40px;
+    max-width: 1466px;
     width: 100%;
-    max-width: 1546px;
-    margin: 0 auto;
-    padding: 0 40px 40px;
+  }
+
+  main {
+    display: flex;
+    flex-direction: column;
+    row-gap: 32px;
+
+    margin-bottom: 32px;
   }
 }

@@ -1,0 +1,42 @@
+.container {
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px;
+
+  > strong {
+    color: var(--text-white);
+    font-size: 28px;
+  }
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 1fr 250px;
+  column-gap: 32px;
+  width: 100%;
+}
+
+.chart {
+  height: 350px;
+}
+
+.resume {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  > div {
+    padding: 12px 24px;
+  }
+
+  p {
+    font-size: 15px;
+    color: var(--text-secondary);
+  }
+
+  strong {
+    font-size: 32px;
+  }
+}

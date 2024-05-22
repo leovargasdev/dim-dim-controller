@@ -47,44 +47,33 @@ export const TransactionsResume = () => {
   }, [data, CATEGORIES])
 
   return (
-    <>
-      {/* <span style={{ maxHeight: 300 }}>
-        <ChartLine
-          values={[70, 50, 80, 110, 50]}
-          labels={['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta']}
-        />
-      </span>
-      <span style={{ maxHeight: 300 }}>
-        <ChartDoughnut items={resumeCategories} />
-      </span> */}
-      <section className={styles.container}>
-        <article>
-          <div className={styles.label}>
-            <h2>Receita total(mês)</h2>
-            <HandCoins size={32} />
-          </div>
+    <section className={styles.container}>
+      <article>
+        <div className={styles.label}>
+          <h2>Receita total(mês)</h2>
+          <HandCoins size={32} />
+        </div>
 
-          <strong>{convertFloatToCurrency(resume.in)}</strong>
-        </article>
+        <strong>{convertFloatToCurrency(resume.in)}</strong>
+      </article>
 
-        <article>
-          <div className={styles.label}>
-            <h2>Despesa total(mês)</h2>
-            <CreditCard size={32} />
-          </div>
+      <article>
+        <div className={styles.label}>
+          <h2>Despesa total(mês)</h2>
+          <CreditCard size={32} />
+        </div>
 
-          <strong>{convertFloatToCurrency(resume.out)}</strong>
-        </article>
+        <strong>{convertFloatToCurrency(resume.out)}</strong>
+      </article>
 
-        <article>
-          <div className={styles.label}>
-            <h2>Saldo (mês)</h2>
-            <PiggyBank size={32} />
-          </div>
+      <article>
+        <div className={styles.label}>
+          <h2>Saldo (mês)</h2>
+          <PiggyBank size={32} />
+        </div>
 
-          <strong>{convertFloatToCurrency(resume.in - resume.out)}</strong>
-        </article>
-      </section>
-    </>
+        <strong>{convertFloatToCurrency(resume.in - resume.out)}</strong>
+      </article>
+    </section>
   )
 }

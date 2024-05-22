@@ -1,28 +1,17 @@
 import { NextPage } from 'next'
-import { useMemo } from 'react'
-import { differenceInCalendarDays } from 'date-fns'
 
 import { ViewList } from './components'
-import { ChartDoughnut, ChartLine } from 'components'
-
-import { useTransactions } from 'hooks'
-import CATEGORIES from 'data/transaction-out-categories'
-import { convertFloatToCurrency, formatDate } from 'utils/format'
+import { ChartDoughnut } from 'components'
+import { Header } from './components/Header'
 
 import styles from './styles.module.scss'
+import { useTransactions } from 'hooks'
+import { useMemo } from 'react'
+import CATEGORIES from 'data/transaction-out-categories'
+import { formatDate } from 'utils/format'
 
 const today = new Date()
 const currentMonth = formatDate(today, 'MMMM-yyyy')
-const currenteDay = today.getDay() + 1
-const daysInWeekly = [
-  'Domingo',
-  'Segunda',
-  'Terça',
-  'Quarta',
-  'Quinta',
-  'Sexta',
-  'Sabado'
-]
 
 const TransactionsPage: NextPage = () => {
   const { transactions } = useTransactions()
@@ -50,66 +39,20 @@ const TransactionsPage: NextPage = () => {
     })).filter(category => category.value > 0)
   }, [transactionsOutInCurrentMonth, CATEGORIES])
 
-  const resume = useMemo(() => {
-    const data = transactionsOutInCurrentMonth.reduce(
-      (acc, transaction) => {
-        const { date, value } = transaction
-        const { daily, weekly, monthly, lastSevenDays } = acc
-        const distance = differenceInCalendarDays(today, date)
-
-        if (distance < 7) {
-          lastSevenDays[distance] = lastSevenDays[distance] + value
-        }
-
-        return {
-          daily: distance === 0 ? daily + value : daily,
-          weekly: distance <= 7 ? weekly + value : weekly,
-          monthly: distance <= 30 ? monthly + value : monthly,
-          lastSevenDays
-        }
-      },
-      { daily: 0, weekly: 0, monthly: 0, lastSevenDays: [0, 0, 0, 0, 0, 0, 0] }
-    )
-
-    return data
-  }, [transactionsOutInCurrentMonth])
-
   return (
-    <div className={styles.container}>
-      <ViewList />
+    <>
+      <Header />
 
-      <section className={styles.resume}>
-        <div className={styles.info}>
-          <div>
-            <p>Diário</p>
-            <strong>{convertFloatToCurrency(resume.daily)}</strong>
-          </div>
+      <div className={styles.list_and_doughnut}>
+        <ViewList />
 
-          <div>
-            <p>Semanal</p>
-            <strong>{convertFloatToCurrency(resume.weekly)}</strong>
-          </div>
-
-          <div>
-            <p>Mensal</p>
-            <strong>{convertFloatToCurrency(resume.monthly)}</strong>
-          </div>
-        </div>
-
-        <span className={styles.chart__doughnut}>
-          <ChartDoughnut items={resumeCategories} />
-        </span>
-
-        <span style={{ height: 350 }}>
-          <ChartLine
-            values={resume.lastSevenDays.reverse()}
-            labels={daysInWeekly
-              .slice(currenteDay)
-              .concat(daysInWeekly.slice(0, currenteDay))}
-          />
-        </span>
-      </section>
-    </div>
+        <section className={'card ' + styles.doughnut}>
+          <span>
+            <ChartDoughnut items={resumeCategories} />
+          </span>
+        </section>
+      </div>
+    </>
   )
 }
 

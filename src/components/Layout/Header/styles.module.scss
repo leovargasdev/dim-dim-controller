@@ -1,37 +1,49 @@
 .header {
-  display: flex;
-  justify-content: center;
-
   width: 100%;
-  padding: 24px 40px;  
-  border: 1px solid var(--border);
+  max-width: 1440px;
 
-  > div {
+  display: flex;
+  align-items: center;
+  column-gap: 80px;
+
+  margin-top: 32px;
+
+  &::before {
+    content: '';
+    inset: 0;
+    position: absolute;
     width: 100%;
-    max-width: 1440px;
+    height: 350px;
+    z-index: -1;
+    background: var(--background-terciary);
+  }
 
+  strong {
     display: flex;
     align-items: center;
-    column-gap: 40px;
+    column-gap: 6px;
 
-    strong {
-      display: flex;
-      align-items: center;
-      column-gap: 2px;
+    font-size: 20px;
+    letter-spacing: -0.5px;
+    color: var(--text-white);
+  }
 
-      font-size: 20px;
-      letter-spacing: -0.5px;
-    }
+  button {
+    display: flex;
+    align-items: center;
+    column-gap: 8px;
 
-    .separator {
-      width: 1px;
-      height: 32px;
-      background: var(--border);
-    }
+    margin-left: auto;
+    color: var(--red);
+    border: 1px solid var(--red);
+    padding: 6px 32px;
+    border-radius: 6px;
 
-    button {
-      margin-left: auto;
-      color: var(--red);
+    opacity: 0.8;
+    transition: all 0.4s;
+
+    &:hover {
+      opacity: 1;
     }
   }
 }
@@ -39,5 +51,17 @@
 .menu {
   display: flex;
   align-items: center;
-  column-gap: 40px;
+  column-gap: 24px;
+
+  a {
+    padding: 6px 32px;
+    border-radius: 6px;
+    letter-spacing: 0.5px;
+    color: var(--text-white-secondary);
+
+    &.active {
+      color: var(--text-white);
+      background: #333B4A;
+    }
+  }
 }

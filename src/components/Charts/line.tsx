@@ -34,11 +34,11 @@ export const ChartLine = ({ labels, values }: ChartLineProps) => (
       scales: {
         y: {
           border: { color: 'transparent' },
-          grid: { color: 'rgba(255, 255, 255, 0.1)' }
+          grid: { color: 'rgba(0, 0, 0, 0.05)' }
         },
         x: {
-          grid: { color: 'rgba(255, 255, 255, 0.2)' },
-          border: { color: 'rgba(255, 255, 255, 0.2)' }
+          grid: { color: 'rgba(0, 0, 0, 0.1)' },
+          border: { color: 'rgba(0, 0, 0, 0.1)' }
         }
       }
     }}

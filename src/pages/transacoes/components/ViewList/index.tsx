@@ -53,61 +53,58 @@ export const ViewList = () => {
         transaction={action.type === 'edit' ? action.transaction : null}
       />
 
-      <section className={styles.container}>
-        {/* <h1>Lista de transações</h1> */}
-        <div className={styles.content}>
-          {transactions.map(transaction => {
-            const isRevenue = transaction.type === 'in'
+      <section className={'card ' + styles.container}>
+        {transactions.map(transaction => {
+          const isRevenue = transaction.type === 'in'
 
-            return (
-              <div key={transaction.id} className={styles.item}>
-                <span className={styles.item__type}>
-                  <Tooltip text={isRevenue ? 'Receita' : 'Despesa'}>
-                    {/* eslint-disable-next-line prettier/prettier */}
+          return (
+            <div key={transaction.id} className={styles.item}>
+              <span className={styles.item__type}>
+                <Tooltip text={isRevenue ? 'Receita' : 'Despesa'}>
+                  {/* eslint-disable-next-line prettier/prettier */}
                     {isRevenue ? <CaretUp size={16} weight="bold" fill="var(--green)" /> : <CaretDown size={16} weight="bold" fill="var(--red)" />}
-                  </Tooltip>
-                </span>
+                </Tooltip>
+              </span>
 
-                <span className={styles.item__icon}>
-                  <GameController size={18} weight="regular" />
-                </span>
+              <span className={styles.item__icon}>
+                <GameController size={18} weight="regular" />
+              </span>
 
-                <div className={styles.item__info}>
-                  <strong>{transaction.name}</strong>
-                  <time dateTime={transaction.date as never}>
-                    {formatDate(transaction.date, "dd 'de' MMM. (iii)")}
-                  </time>
-                </div>
-
-                <span className={styles.item__value}>
-                  {convertFloatToCurrency(transaction.value)}
-                </span>
-
-                <div className={styles.item__actions}>
-                  <Tooltip text="Editar transação">
-                    <button
-                      type="button"
-                      data-type="edit"
-                      onClick={() => setAction({ type: 'edit', transaction })}
-                    >
-                      <Pencil size={14} fill="var(--secondary)" />
-                    </button>
-                  </Tooltip>
-
-                  <Tooltip text="Remover transação">
-                    <button
-                      type="button"
-                      data-type="remove"
-                      onClick={() => setAction({ type: 'remove', transaction })}
-                    >
-                      <Trash size={16} fill="var(--secondary)" />
-                    </button>
-                  </Tooltip>
-                </div>
+              <div className={styles.item__info}>
+                <strong>{transaction.name}</strong>
+                <time dateTime={transaction.date as never}>
+                  {formatDate(transaction.date, "dd 'de' MMM. (iii)")}
+                </time>
               </div>
-            )
-          })}
-        </div>
+
+              <span className={styles.item__value}>
+                {convertFloatToCurrency(transaction.value)}
+              </span>
+
+              <div className={styles.item__actions}>
+                <Tooltip text="Editar transação">
+                  <button
+                    type="button"
+                    data-type="edit"
+                    onClick={() => setAction({ type: 'edit', transaction })}
+                  >
+                    <Pencil size={14} fill="var(--secondary)" />
+                  </button>
+                </Tooltip>
+
+                <Tooltip text="Remover transação">
+                  <button
+                    type="button"
+                    data-type="remove"
+                    onClick={() => setAction({ type: 'remove', transaction })}
+                  >
+                    <Trash size={16} fill="var(--secondary)" />
+                  </button>
+                </Tooltip>
+              </div>
+            </div>
+          )
+        })}
       </section>
     </>
   )

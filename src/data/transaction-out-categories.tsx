@@ -55,7 +55,7 @@ export default [
     name: 'Outros (gastos)',
     value: 'outros',
     icon: <CirclesFour size={24} weight="regular" />,
-    color: '#ffffff'
+    color: '#B3B5BC'
   },
   {
     name: 'Pet',

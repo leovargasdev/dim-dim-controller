@@ -1,24 +1,15 @@
 .container {
   display: flex;
   flex-direction: column;
-  row-gap: 16px;
-
-  h1 {
-    font-size: 24px;
-  }
-}
-
-.content {
-  display: flex;
-  flex-direction: column;
 
   width: 100%;
 
-  border-radius: 12px;
-  border: 1px solid var(--border);
+  padding: 8px 0;
 
   .item:not(:first-child) {
     border-top: 1px solid var(--border);
+    padding-top: 8px;
+    margin-top: 8px;
   }
 }
 
@@ -34,14 +25,10 @@
   line-height: 1.875rem;
   color: var(--secondary);
 
-  &:hover {
-    background: rgba(41, 37, 36, 0.25);
-  }
-
   .item__icon {
     width: 32px;
     height: 32px;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(#000000, 0.05);
     border-radius: 100%;
 
     display: flex;
@@ -58,12 +45,12 @@
     strong {
       font-size: 16px;
       font-weight: 500;
-      color: var(--primary);
     }
     
     time {
       font-size: 12px;
       font-weight: 300;
+      color: var(--text-dark-secondary);
     }
   }
 

@@ -35,7 +35,7 @@ export const ChartDoughnut = ({ items }: ChartDoughnutProps) => (
           position: 'right',
           labels: {
             padding: 24,
-            color: '#FAFAF9',
+            color: '#6B6B6B',
             font: { size: 15 }
           }
         }
