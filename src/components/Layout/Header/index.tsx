@@ -1,25 +1,42 @@
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { BadgeDollarSign, LogOut } from 'lucide-react'
+
 import styles from './styles.module.scss'
 
-export const Header = () => (
-  <header className={styles.header}>
-    <strong>
-      <BadgeDollarSign color="var(--green)" />
-      FINANÇAS
-    </strong>
+const routes = [
+  { path: '/transacoes', name: 'Início' },
+  { path: '/nova-transacao', name: 'Cadastrar transação' },
+  { path: '/relario', name: 'Relatorios' }
+]
 
-    <nav className={styles.menu}>
-      <Link href="/transacoes" className={styles.active}>
-        Inicio
-      </Link>
-      <Link href="/nova-transacao">Nova transação</Link>
-      <Link href="/nova-transacao">Relatorios</Link>
-    </nav>
+export const Header = () => {
+  const router = useRouter()
+  const currentPath = router.asPath
 
-    <button type="button">
-      <LogOut size={18} />
-      SAIR
-    </button>
-  </header>
-)
+  return (
+    <header className={styles.header}>
+      <strong>
+        <BadgeDollarSign color="var(--green)" />
+        FINANÇAS
+      </strong>
+
+      <nav className={styles.menu}>
+        {routes.map(routeItem => (
+          <Link
+            key={routeItem.path}
+            href={routeItem.path}
+            className={currentPath === routeItem.path ? styles.active : ''}
+          >
+            {routeItem.name}
+          </Link>
+        ))}
+      </nav>
+
+      <button type="button">
+        <LogOut size={18} />
+        SAIR
+      </button>
+    </header>
+  )
+}
