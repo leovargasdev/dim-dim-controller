@@ -6,7 +6,7 @@ import styles from './styles.module.scss'
 
 const routes = [
   { path: '/transacoes', name: 'Início' },
-  { path: '/nova-transacao', name: 'Cadastrar transação' },
+  { path: '/cadastrar-transacao', name: 'Cadastrar transação' },
   { path: '/relario', name: 'Relatorios' }
 ]
 
