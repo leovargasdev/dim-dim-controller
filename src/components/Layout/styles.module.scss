@@ -12,11 +12,17 @@
     width: 100%;
   }
 
-  main {
+  > main {
     display: flex;
     flex-direction: column;
     row-gap: 32px;
 
     margin-bottom: 32px;
+
+    // title pages
+    > section > h1 {
+      color: var(--text-white);
+      font-size: 28px;
+    }
   }
 }

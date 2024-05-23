@@ -67,54 +67,66 @@ const NewTransactionPage = () => {
   const isLoading = useFormMethods.formState.isSubmitting
 
   return (
-    <FormProvider {...useFormMethods}>
-      <form
-        className={styles.container}
-        onSubmit={useFormMethods.handleSubmit(onSubmit)}
-      >
-        <main className={styles.main}>
-          <div className={styles.header}>
-            <div className={styles.header__inputs}>
-              <SelectCell
-                name="type"
-                label="Tipo de transação"
-                options={TYPE_TRANSACTIONS}
-              />
+    <section className={styles.container}>
+      <h1>Cadastrar transação</h1>
+      <FormProvider {...useFormMethods}>
+        <form
+          className="card"
+          style={{ padding: 32 }}
+          onSubmit={useFormMethods.handleSubmit(onSubmit)}
+        >
+          <div className={styles.main}>
+            <div className={styles.header}>
+              <div className={styles.header__inputs}>
+                <SelectCell
+                  name="type"
+                  label="Tipo de transação"
+                  options={TYPE_TRANSACTIONS}
+                />
 
-              <Autocomplete
-                type="text"
-                name="name"
-                label="Descrição"
-                placeholder="Descrição"
-                onSelected={onSelectAutocomplete}
-                options={transactions.map(t => ({ name: t.name, value: t.id }))}
-              />
+                <Autocomplete
+                  type="text"
+                  name="name"
+                  label="Descrição"
+                  placeholder="Descrição"
+                  onSelected={onSelectAutocomplete}
+                  options={transactions.map(t => ({
+                    name: t.name,
+                    value: t.id
+                  }))}
+                />
 
-              <Input
-                type="text"
-                label="Valor"
-                name="value"
-                placeholder="R$ 0,00"
-                maxLength={13}
-                mask={maskMoney}
-              />
+                <Input
+                  type="text"
+                  label="Valor"
+                  name="value"
+                  placeholder="R$ 0,00"
+                  maxLength={13}
+                  mask={maskMoney}
+                />
+              </div>
+
+              <CalendarPicker name="date" />
             </div>
 
-            <CalendarPicker name="date" />
+            <SelectCell
+              name="category"
+              options={categories}
+              label="Categorias"
+            />
           </div>
 
-          <SelectCell name="category" options={categories} label="Categorias" />
-        </main>
-
-        <button
-          type="submit"
-          disabled={isLoading}
-          className={`button ${isLoading ? 'loading' : ''}`}
-        >
-          Cadastrar transação
-        </button>
-      </form>
-    </FormProvider>
+          <button
+            type="submit"
+            className="button"
+            disabled={isLoading}
+            data-state={isLoading ? 'loading' : 'read'}
+          >
+            Cadastrar transação
+          </button>
+        </form>
+      </FormProvider>
+    </section>
   )
 }
 

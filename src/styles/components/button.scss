@@ -8,13 +8,17 @@
   padding: 10px 0;
   border-radius: 6px;
   padding: 12px 24px;
-  background: var(--link);
-  color: var(--primary);
-
+  background: var(--background-terciary);
+  
   font-size: 1rem;
   font-weight: 500;
+  color: var(--text-white);
 
   transition: all 0.4s;
+
+  &:hover {
+    background: rgba(#1C2634, 0.9);
+  }
 
   &:disabled {
     opacity: 0.6;

@@ -29,9 +29,13 @@
     width: 100%;
     padding: 12px 0;
     border-radius: 6px;
-    color: var(--primary);
-    background: rgba(22, 23, 27, 0.9);
+    color: var(--text-dark);
+    background: var(--background);
 
-    border: 1px solid transparent;
+    border: 1px solid var(--border);
+
+    &[aria-selected="true"] {
+      color: var(--text-white);
+    }
   }
 }

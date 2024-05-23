@@ -25,9 +25,10 @@ export const SelectCell = ({ name, label, options }: SelectCellProps) => {
   const handleStyle = (category: OptionCell) => {
     if (field.value === category.value) {
       const color = category?.color || '#1C60CA'
+
       return {
         borderColor: color + '91',
-        background: color + '2d'
+        background: color
       }
     }
 
@@ -44,6 +45,7 @@ export const SelectCell = ({ name, label, options }: SelectCellProps) => {
             type="button"
             key={option.value}
             style={handleStyle(option)}
+            aria-selected={field.value === option.value}
             onClick={() => field.onChange(option.value)}
           >
             {option?.icon}

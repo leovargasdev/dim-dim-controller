@@ -53,7 +53,7 @@ export const TransactionsHeader = () => {
 
   return (
     <section className={styles.container}>
-      <strong>Transações por dia da semana</strong>
+      <h1>Transações por dia da semana</h1>
       <div className={styles.content}>
         <div className={'card ' + styles.chart}>
           <ChartLine

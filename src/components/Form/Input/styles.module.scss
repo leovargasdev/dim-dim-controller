@@ -20,8 +20,8 @@
     padding: 12px;
     border-radius: 6px;
     color: var(--primary);
-    background: rgba(22, 23, 27, 0.3);
-    border: 1px solid rgb(245, 245, 245, 0.1);
+    background: var(--background);
+    border: 1px solid var(--border);
 
     &[aria-invalid=true] {
       border-color: var(--error);
