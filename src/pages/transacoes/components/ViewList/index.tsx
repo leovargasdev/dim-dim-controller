@@ -71,6 +71,7 @@ export const ViewList = () => {
               </span>
 
               <div className={styles.item__info}>
+                {/* <strong>{self.crypto.randomUUID()}</strong> */}
                 <strong>{transaction.name}</strong>
                 <time dateTime={transaction.date as never}>
                   {formatDate(transaction.date, "dd 'de' MMM. (iii)")}
