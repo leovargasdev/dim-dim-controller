@@ -62,7 +62,7 @@ export const ViewList = () => {
               <span className={styles.item__type}>
                 <Tooltip text={isRevenue ? 'Receita' : 'Despesa'}>
                   {/* eslint-disable-next-line prettier/prettier */}
-                    {isRevenue ? <CaretUp size={16} weight="bold" fill="var(--green)" /> : <CaretDown size={16} weight="bold" fill="var(--red)" />}
+                  {isRevenue ? <CaretUp size={16} weight="bold" fill="var(--green)" /> : <CaretDown size={16} weight="bold" fill="var(--red)" />}
                 </Tooltip>
               </span>
 

@@ -4,17 +4,17 @@
 
   width: 100%;
 
-  padding: 8px 0;
+  padding: 0;
 
   .item:not(:first-child) {
     border-top: 1px solid var(--border);
-    padding-top: 8px;
-    margin-top: 8px;
+    // padding-top: 8px;
+    // margin-top: 8px;
   }
 }
 
 .item {
-  padding: 4px 16px;
+  padding: 8px 16px;
 
   display: flex;
   align-items: center;
@@ -24,6 +24,13 @@
   text-align: left;
   line-height: 1.875rem;
   color: var(--secondary);
+
+  transition: all 0.2s;
+
+  &:hover {
+    cursor: pointer;
+    background: rgba(#F4F4F7, 0.75);
+  }
 
   .item__icon {
     width: 32px;
@@ -61,7 +68,6 @@
 
     margin-left: auto;
   }
-
 }
 
 .item__actions {
