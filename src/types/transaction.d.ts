@@ -23,11 +23,13 @@ type TransactionIn =
   | 'investimento'
   | 'salario'
 
+export type TransactionCategory = TransactionOut | TransactionIn
+
 interface Base {
   name: string
   date: Date
   type: TransactionType
-  category: TransactionOut | TransactionIn
+  category: TransactionCategory
 }
 export interface Transaction extends Base {
   id: string

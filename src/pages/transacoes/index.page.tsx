@@ -3,7 +3,7 @@ import { NextPage } from 'next'
 
 import { useTransactions } from 'hooks'
 import { formatDate } from 'utils/format'
-import CATEGORIES from 'data/transaction-out-categories'
+import { categoriesOut } from 'data/transaction-categories'
 
 import { ChartDoughnut } from 'components'
 import { ViewList, TransactionsHeader } from './components'
@@ -32,12 +32,14 @@ const TransactionsPage: NextPage = () => {
       {}
     )
 
-    return CATEGORIES.map(category => ({
-      name: category.name,
-      color: category.color,
-      value: sumCategories[category.value]
-    })).filter(category => category.value > 0)
-  }, [transactionsOutInCurrentMonth, CATEGORIES])
+    return categoriesOut
+      .map(category => ({
+        name: category.name,
+        color: category.color,
+        value: sumCategories[category.value]
+      }))
+      .filter(category => category.value > 0)
+  }, [transactionsOutInCurrentMonth, categoriesOut])
 
   return (
     <>

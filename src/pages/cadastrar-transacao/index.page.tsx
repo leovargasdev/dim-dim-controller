@@ -1,10 +1,10 @@
-import { useEffect } from 'react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm, FormProvider } from 'react-hook-form'
 
 import { maskMoney } from 'utils/mask'
 import { useTransactions } from 'hooks'
-import type { FormTransaction } from 'types/transaction'
+import { convertFloatToCurrency } from 'utils/format'
+import type { FormTransaction, TransactionCategory } from 'types/transaction'
 import { zodTransactionSchema, defaultValues } from 'utils/transaction'
 import {
   Autocomplete,
@@ -13,12 +13,10 @@ import {
   SelectCell
 } from 'components/Form'
 
-import TYPE_TRANSACTIONS from 'data/type-transactions'
-import CATEGORIES_IN from 'data/transaction-in-categories'
-import CATEGORIES_OUT from 'data/transaction-out-categories'
+import TRANSACTION_TYPES from 'data/transaction-types'
+import { categoriesIn, categoriesOut } from 'data/transaction-categories'
 
 import styles from './styles.module.scss'
-import { convertFloatToCurrency } from 'utils/format'
 
 const NewTransactionPage = () => {
   const { transactions, addTransaction } = useTransactions()
@@ -29,40 +27,34 @@ const NewTransactionPage = () => {
     defaultValues
   })
 
+  const type = useFormMethods.watch('type')
+  const categories = type === 'in' ? categoriesIn : categoriesOut
+
   const onSubmit = async (data: FormTransaction): Promise<void> => {
     await addTransaction(data)
     useFormMethods.setValue('name', '')
     useFormMethods.setValue('value', '')
   }
 
-  const onSelectAutocomplete = (transactionId: string): void => {
-    const transaction = transactions.find(t => t.id === transactionId)
+  const onChangeCategory = (newCategory: TransactionCategory) => {
+    setTimeout(() => useFormMethods.setValue('category', newCategory), 200)
+  }
+
+  const onSelectAutocomplete = (id: string): void => {
+    const transaction = transactions.find(trans => trans.id === id)
 
     if (transaction) {
       const value = convertFloatToCurrency(transaction.value)
       useFormMethods.setValue('value', value)
       useFormMethods.setValue('type', transaction.type)
-      setTimeout(
-        () => useFormMethods.setValue('category', transaction.category),
-        500
-      )
+      onChangeCategory(transaction.category)
     }
   }
 
-  const type = useFormMethods.watch('type')
-  const categories = type === 'in' ? CATEGORIES_IN : CATEGORIES_OUT
-
-  useEffect(() => {
-    const category = useFormMethods.getValues('category')
-    const isOutCategory =
-      CATEGORIES_OUT.findIndex(c => c.value === category) >= 0
-
-    if (isOutCategory && type === 'in') {
-      useFormMethods.setValue('category', 'salario')
-    } else if (!isOutCategory && type === 'out') {
-      useFormMethods.setValue('category', 'alimentacao')
-    }
-  }, [type])
+  const onChangeType = (newType: string) => {
+    const category = newType === 'out' ? 'alimentacao' : 'salario'
+    onChangeCategory(category)
+  }
 
   const isLoading = useFormMethods.formState.isSubmitting
 
@@ -81,7 +73,8 @@ const NewTransactionPage = () => {
                 <SelectCell
                   name="type"
                   label="Tipo de transação"
-                  options={TYPE_TRANSACTIONS}
+                  options={TRANSACTION_TYPES}
+                  externalEvent={onChangeType}
                 />
 
                 <Autocomplete

@@ -13,9 +13,15 @@ interface SelectCellProps {
   name: string
   label: string
   options: OptionCell[]
+  externalEvent?: (value: string) => void
 }
 
-export const SelectCell = ({ name, label, options }: SelectCellProps) => {
+export const SelectCell = ({
+  name,
+  label,
+  options,
+  externalEvent = undefined
+}: SelectCellProps) => {
   const { control } = useFormContext()
   const { field, fieldState } = useController({ name, control })
 
@@ -35,6 +41,11 @@ export const SelectCell = ({ name, label, options }: SelectCellProps) => {
     return {}
   }
 
+  const onClick = (value: string) => {
+    field.onChange(value)
+    externalEvent && externalEvent(value)
+  }
+
   return (
     <fieldset className={styles.container}>
       <label htmlFor="type">{label}</label>
@@ -46,7 +57,7 @@ export const SelectCell = ({ name, label, options }: SelectCellProps) => {
             key={option.value}
             style={handleStyle(option)}
             aria-selected={field.value === option.value}
-            onClick={() => field.onChange(option.value)}
+            onClick={() => onClick(option.value)}
           >
             {option?.icon}
             {option.name}

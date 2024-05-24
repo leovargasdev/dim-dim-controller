@@ -6,20 +6,20 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm, FormProvider } from 'react-hook-form'
 
 import { Modal } from 'components'
-import { maskMoney } from 'utils/mask'
+import { Input, Select } from 'components/Form'
+
 import {
   convertCurrencyToFloat,
   convertFloatToCurrency,
   formatDate
 } from 'utils/format'
-import { Transaction } from 'types/transaction'
-import { Input, Select } from 'components/Form'
+import { maskMoney } from 'utils/mask'
+import TRANSACTION_TYPE from 'data/transaction-types'
 import { zodTransactionSchema } from 'utils/transaction'
+import type { Transaction, FormTransaction } from 'types/transaction'
+import { categoriesIn, categoriesOut } from 'data/transaction-categories'
 
 import styles from './styles.module.scss'
-import TYPE_TRANSACTIONS from 'data/type-transactions'
-import CATEGORIES_IN from 'data/transaction-in-categories'
-import CATEGORIES_OUT from 'data/transaction-out-categories'
 
 interface Props {
   transaction: Transaction | null
@@ -28,7 +28,7 @@ interface Props {
 
 export const ModalEditTransaction = ({ transaction, onClose }: Props) => {
   const { handleEditTransaction } = useTransactions()
-  const useFormMethods = useForm<Transaction>({
+  const useFormMethods = useForm<FormTransaction>({
     mode: 'onSubmit',
     resolver: zodResolver(zodTransactionSchema)
   })
@@ -45,14 +45,16 @@ export const ModalEditTransaction = ({ transaction, onClose }: Props) => {
     }
   }, [transaction])
 
-  const onSubmit = async (data: any): Promise<void> => {
+  const onSubmit = async (data: FormTransaction): Promise<void> => {
     if (transaction) {
-      await handleEditTransaction({
+      const payload = {
         ...data,
         id: transaction.id,
         value: convertCurrencyToFloat(data.value),
         date: addHours(new Date(data.date), 3)
-      })
+      } as Transaction
+
+      await handleEditTransaction(payload)
       onClose()
     }
   }
@@ -73,14 +75,14 @@ export const ModalEditTransaction = ({ transaction, onClose }: Props) => {
               <Select
                 name="type"
                 label="Tipo de transação"
-                options={TYPE_TRANSACTIONS}
+                options={TRANSACTION_TYPE}
               />
               {/* TODO */}
               {/* monitorar o type para resetar o campo */}
               <Select
                 name="category"
                 label="Categoria"
-                options={type === 'in' ? CATEGORIES_IN : CATEGORIES_OUT}
+                options={type === 'in' ? categoriesIn : categoriesOut}
               />
             </div>
 
