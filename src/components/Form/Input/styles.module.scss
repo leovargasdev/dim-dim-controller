@@ -7,19 +7,18 @@
   width: 100%;
 
   label {
-    font-size: 1rem;
-    line-height: 1.25rem;
-    color: var(--primary);
+    font-size: 16px;
+    line-height: 20px;
+    color: var(--text-dark);
   }
 
   input {
     outline: none;
-
     
     width: 100%;
     padding: 12px;
     border-radius: 6px;
-    color: var(--primary);
+    color: var(--text-dark);
     background: var(--background);
     border: 1px solid var(--border);
 

@@ -1,6 +1,6 @@
 export type TransactionType = 'in' | 'out'
 
-type TransactionOut =
+type CategoryTypeOut =
   | 'alimentacao'
   | 'assinaturas'
   | 'educacao'
@@ -16,20 +16,20 @@ type TransactionOut =
   | 'vestuario'
   | 'viagem'
 
-type TransactionIn =
+type CategoryTypeIn =
   | 'cashback'
   | 'outros'
   | 'premio'
   | 'investimento'
   | 'salario'
 
-export type TransactionCategory = TransactionOut | TransactionIn
+export type CategoryType = CategoryTypeOut | CategoryTypeIn
 
 interface Base {
   name: string
   date: Date
   type: TransactionType
-  category: TransactionCategory
+  category: CategoryType
 }
 export interface Transaction extends Base {
   id: string
@@ -40,4 +40,10 @@ export interface Transaction extends Base {
 
 export interface FormTransaction extends Base {
   value: string
+}
+
+export interface Category {
+  value: CategoryType
+  icon: React.ReactNode
+  name: string
 }

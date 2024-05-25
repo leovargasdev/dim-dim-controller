@@ -66,7 +66,7 @@ export const ModalEditTransaction = ({ transaction, onClose }: Props) => {
       onOpenChange={onClose}
       open={transaction !== null}
       title="Editar transação"
-      description="Edite os campos para atualizar a transação"
+      description="Altere os campos para atualizar a transação"
     >
       <FormProvider {...useFormMethods}>
         <form onSubmit={useFormMethods.handleSubmit(onSubmit)}>

@@ -1,6 +1,40 @@
 .container {
   display: flex;
   flex-direction: column;
+  row-gap: 16px;
+}
+
+.search {
+  display: flex;
+  align-items: center;
+  column-gap: 8px;
+
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+
+  svg {
+    fill: var(--text-dark-secondary);
+  }
+  
+  input {
+    flex: 1;
+    border: 0;
+    outline: none;
+    background: transparent;
+
+    font-size: 16px;
+    color: var(--text-dark);
+
+    &::placeholder {
+      color: var(--text-dark-secondary);
+    }
+  }
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
 
   width: 100%;
 
@@ -8,8 +42,6 @@
 
   .item:not(:first-child) {
     border-top: 1px solid var(--border);
-    // padding-top: 8px;
-    // margin-top: 8px;
   }
 }
 
@@ -41,6 +73,12 @@
     display: flex;
     align-items: center;
     justify-content: center;
+
+    svg {
+      width: 18px;
+      height: auto;
+      fill: var(--text-dark);
+    }
   }
 
   .item__info {

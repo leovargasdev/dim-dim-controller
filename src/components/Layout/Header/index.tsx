@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { BadgeDollarSign, LogOut } from 'lucide-react'
+import { MoneyWavy, SignOut } from '@phosphor-icons/react'
 
 import styles from './styles.module.scss'
 
@@ -17,7 +17,7 @@ export const Header = () => {
   return (
     <header className={styles.header}>
       <strong>
-        <BadgeDollarSign color="var(--green)" />
+        <MoneyWavy size={24} color="var(--green)" />
         FINANÇAS
       </strong>
 
@@ -34,7 +34,7 @@ export const Header = () => {
       </nav>
 
       <button type="button">
-        <LogOut size={18} />
+        <SignOut size={18} weight="bold" />
         SAIR
       </button>
     </header>

@@ -4,7 +4,7 @@ import { useForm, FormProvider } from 'react-hook-form'
 import { maskMoney } from 'utils/mask'
 import { useTransactions } from 'hooks'
 import { convertFloatToCurrency } from 'utils/format'
-import type { FormTransaction, TransactionCategory } from 'types/transaction'
+import type { FormTransaction, CategoryType } from 'types/transaction'
 import { zodTransactionSchema, defaultValues } from 'utils/transaction'
 import {
   Autocomplete,
@@ -36,7 +36,7 @@ const NewTransactionPage = () => {
     useFormMethods.setValue('value', '')
   }
 
-  const onChangeCategory = (newCategory: TransactionCategory) => {
+  const onChangeCategory = (newCategory: CategoryType) => {
     setTimeout(() => useFormMethods.setValue('category', newCategory), 200)
   }
 

@@ -2,14 +2,15 @@ import { useState } from 'react'
 import {
   CaretDown,
   CaretUp,
-  GameController,
+  MagnifyingGlass,
   Pencil,
   Trash
 } from '@phosphor-icons/react'
 
 import { useTransactions } from 'hooks'
-import type { Transaction } from 'types/transaction'
+import { categories } from 'data/transaction-categories'
 import { formatDate, convertFloatToCurrency } from 'utils/format'
+import type { Transaction, CategoryType, Category } from 'types/transaction'
 import { Tooltip, ModalEditTransaction, ModalGenericAction } from 'components'
 
 import styles from './styles.module.scss'
@@ -38,6 +39,10 @@ export const ViewList = () => {
     }
   }
 
+  const categoriesIcons = categories.reduce((acc, category) => {
+    return { ...acc, [category.value]: category }
+  }, {} as Record<CategoryType, Category>)
+
   return (
     <>
       <ModalGenericAction
@@ -53,60 +58,70 @@ export const ViewList = () => {
         transaction={action.type === 'edit' ? action.transaction : null}
       />
 
-      <section className={'card ' + styles.container}>
-        {transactions.map(transaction => {
-          const isRevenue = transaction.type === 'in'
+      <div className={styles.container}>
+        <div className={styles.search}>
+          <MagnifyingGlass />
+          <input type="text" placeholder="Pesquise pelo nome da transação" />
+        </div>
 
-          return (
-            <div key={transaction.id} className={styles.item}>
-              <span className={styles.item__type}>
-                <Tooltip text={isRevenue ? 'Receita' : 'Despesa'}>
-                  {/* eslint-disable-next-line prettier/prettier */}
+        <section className={'card ' + styles.list}>
+          {transactions.map(transaction => {
+            const isRevenue = transaction.type === 'in'
+            const category = categoriesIcons[transaction.category]
+
+            return (
+              <div key={transaction.id} className={styles.item}>
+                <span className={styles.item__type}>
+                  <Tooltip text={isRevenue ? 'Receita' : 'Despesa'}>
+                    {/* eslint-disable-next-line prettier/prettier */}
                   {isRevenue ? <CaretUp size={16} weight="bold" fill="var(--green)" /> : <CaretDown size={16} weight="bold" fill="var(--red)" />}
-                </Tooltip>
-              </span>
+                  </Tooltip>
+                </span>
 
-              <span className={styles.item__icon}>
-                <GameController size={18} weight="regular" />
-              </span>
+                <span className={styles.item__icon}>
+                  <Tooltip text={category.name} sideOffset={12}>
+                    {category.icon}
+                  </Tooltip>
+                </span>
 
-              <div className={styles.item__info}>
-                {/* <strong>{self.crypto.randomUUID()}</strong> */}
-                <strong>{transaction.name}</strong>
-                <time dateTime={transaction.date as never}>
-                  {formatDate(transaction.date, "dd 'de' MMM. (iii)")}
-                </time>
+                <div className={styles.item__info}>
+                  {/* <strong>{self.crypto.randomUUID()}</strong> */}
+                  <strong>{transaction.name}</strong>
+                  <time dateTime={transaction.date as never}>
+                    {formatDate(transaction.date, "dd 'de' MMM. (iii)")}
+                  </time>
+                </div>
+
+                <span className={styles.item__value}>
+                  {convertFloatToCurrency(transaction.value)}
+                </span>
+
+                <div className={styles.item__actions}>
+                  <Tooltip text="Editar transação">
+                    <button
+                      type="button"
+                      data-type="edit"
+                      onClick={() => setAction({ type: 'edit', transaction })}
+                    >
+                      <Pencil size={14} fill="var(--secondary)" />
+                    </button>
+                  </Tooltip>
+
+                  <Tooltip text="Remover transação">
+                    <button
+                      type="button"
+                      data-type="remove"
+                      onClick={() => setAction({ type: 'remove', transaction })}
+                    >
+                      <Trash size={16} fill="var(--secondary)" />
+                    </button>
+                  </Tooltip>
+                </div>
               </div>
-
-              <span className={styles.item__value}>
-                {convertFloatToCurrency(transaction.value)}
-              </span>
-
-              <div className={styles.item__actions}>
-                <Tooltip text="Editar transação">
-                  <button
-                    type="button"
-                    data-type="edit"
-                    onClick={() => setAction({ type: 'edit', transaction })}
-                  >
-                    <Pencil size={14} fill="var(--secondary)" />
-                  </button>
-                </Tooltip>
-
-                <Tooltip text="Remover transação">
-                  <button
-                    type="button"
-                    data-type="remove"
-                    onClick={() => setAction({ type: 'remove', transaction })}
-                  >
-                    <Trash size={16} fill="var(--secondary)" />
-                  </button>
-                </Tooltip>
-              </div>
-            </div>
-          )
-        })}
-      </section>
+            )
+          })}
+        </section>
+      </div>
     </>
   )
 }
