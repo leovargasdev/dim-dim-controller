@@ -1,12 +1,5 @@
-import { ChangeEvent, useEffect, useMemo, useState } from 'react'
-import {
-  CaretDown,
-  CaretUp,
-  MagnifyingGlass,
-  Pencil,
-  Trash,
-  X
-} from '@phosphor-icons/react'
+import { useEffect, useState } from 'react'
+import { CaretDown, CaretUp, Pencil, Trash } from '@phosphor-icons/react'
 
 import { useTransactions } from 'hooks'
 import { categories } from 'data/transaction-categories'
@@ -15,6 +8,9 @@ import type { Transaction, CategoryType, Category } from 'types/transaction'
 import { Tooltip, ModalEditTransaction, ModalGenericAction } from 'components'
 
 import styles from './styles.module.scss'
+import { SearchBar } from '../SearchBar'
+import { IconSearchEmpty } from 'components/SVG'
+import { searchValueInArray } from 'utils/array'
 
 interface Action {
   type: 'edit' | 'remove' | ''
@@ -22,12 +18,11 @@ interface Action {
 }
 
 export const ViewList = () => {
-  const { transactions: defaultData, handleRemoveTransaction } =
+  const { transactions: defaultTransactions, handleRemoveTransaction } =
     useTransactions()
-  const [textSearch, setTextSearch] = useState<string>('')
-  const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null)
 
-  const [transactions, setTransactions] = useState<Transaction[]>([])
+  const [transactions, setTransactions] =
+    useState<Transaction[]>(defaultTransactions)
 
   const [loadingRemove, setLoadingRemove] = useState<boolean>(false)
   const [action, setAction] = useState<Action>({ type: '', transaction: null })
@@ -45,38 +40,23 @@ export const ViewList = () => {
     }
   }
 
-  const onSearchTransactions = (value: string) => {
-    setTransactions(defaultData.filter(({ name }) => name.includes(value)))
+  const onSearchTransactions = (termSearch: string) => {
+    setTransactions(searchValueInArray(defaultTransactions, 'name', termSearch))
   }
-
-  const onChangeTextSearch = (event: ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value.trimStart()
-    setTextSearch(value)
-
-    timeoutId && clearTimeout(timeoutId)
-    setTimeoutId(setTimeout(() => onSearchTransactions(value), 500))
-  }
-
-  const onClearTextSearch = () => {
-    setTextSearch('')
-    onSearchTransactions('')
-  }
-
-  useEffect(() => {
-    onSearchTransactions(textSearch)
-  }, [defaultData])
 
   const categoriesIcons = categories.reduce((acc, category) => {
     return { ...acc, [category.value]: category }
   }, {} as Record<CategoryType, Category>)
+
+  console.log('renderizou')
 
   return (
     <>
       <ModalGenericAction
         open={!!action && action.type === 'remove'}
         onClose={onCloseAction}
-        description="Deseja remover essa transação?"
         icon={<Trash size={64} />}
+        description="Deseja remover essa transação?"
         buttonConfirm={{ loading: loadingRemove, action: onRemoveTransaction }}
       />
 
@@ -86,22 +66,17 @@ export const ViewList = () => {
       />
 
       <div className={styles.container}>
-        <div className={styles.search}>
-          <MagnifyingGlass />
-          <input
-            type="text"
-            value={textSearch}
-            onChange={onChangeTextSearch}
-            placeholder="Pesquise pelo nome da transação"
-          />
-          <button
-            type="button"
-            onClick={onClearTextSearch}
-            data-state={textSearch === '' ? 'hidden' : 'read'}
-          >
-            <X />
-          </button>
-        </div>
+        <SearchBar onSearch={onSearchTransactions} />
+
+        {transactions.length === 0 && (
+          <section className={styles.empty}>
+            <IconSearchEmpty />
+            <span>
+              A lista de transações está vazia! Altere o termo buscado ou faço o
+              cadastro de uma transação
+            </span>
+          </section>
+        )}
 
         <section className={'card ' + styles.list}>
           {transactions.map(transaction => {

@@ -4,53 +4,21 @@
   row-gap: 16px;
 }
 
-.search {
+.empty {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  column-gap: 8px;
+  row-gap: 32px;
 
-  padding: 8px 16px;
-  border-radius: 6px;
-  border: 1px solid var(--border);
+  opacity: 0.8;
+  margin-top: 32px;
 
-  svg {
-    fill: var(--text-dark-secondary);
-  }
-  
-  input {
-    flex: 1;
-    border: 0;
-    outline: none;
-    background: transparent;
+  span {
+    max-width: 460px;
 
-    font-size: 16px;
-    color: var(--text-dark);
-
-    &::placeholder {
-      color: var(--text-dark-secondary);
-    }
-  }
-
-  button {
-    width: 25px;
-    height: 25px;
-    border-radius: 100%;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    opacity: 1;
-    transition: all 0.2s;
-
-    &[data-state="hidden"] {
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    &:hover {
-      background: rgba(#000000, 0.05);
-    }
+    font-size: 18px;
+    text-align: center;
+    font-weight: 500;
   }
 }
 
