@@ -38,7 +38,10 @@ export const Autocomplete = ({
       return []
     }
 
-    return searchValueInArray(options, 'name', field.value)
+    const items: Option[] = searchValueInArray(options, 'name', field.value)
+    const filtredRepeatItems = new Map(items.map(item => [item.name, item]))
+
+    return Array.from(filtredRepeatItems.values())
   }, [options, field.value])
 
   const handleSelectedOption = (option: Option): void => {
