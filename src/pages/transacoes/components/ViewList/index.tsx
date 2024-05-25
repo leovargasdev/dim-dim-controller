@@ -1,10 +1,11 @@
-import { useState } from 'react'
+import { ChangeEvent, useEffect, useMemo, useState } from 'react'
 import {
   CaretDown,
   CaretUp,
   MagnifyingGlass,
   Pencil,
-  Trash
+  Trash,
+  X
 } from '@phosphor-icons/react'
 
 import { useTransactions } from 'hooks'
@@ -21,7 +22,12 @@ interface Action {
 }
 
 export const ViewList = () => {
-  const { transactions, handleRemoveTransaction } = useTransactions()
+  const { transactions: defaultData, handleRemoveTransaction } =
+    useTransactions()
+  const [textSearch, setTextSearch] = useState<string>('')
+  const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null)
+
+  const [transactions, setTransactions] = useState<Transaction[]>([])
 
   const [loadingRemove, setLoadingRemove] = useState<boolean>(false)
   const [action, setAction] = useState<Action>({ type: '', transaction: null })
@@ -38,6 +44,27 @@ export const ViewList = () => {
       onCloseAction()
     }
   }
+
+  const onSearchTransactions = (value: string) => {
+    setTransactions(defaultData.filter(({ name }) => name.includes(value)))
+  }
+
+  const onChangeTextSearch = (event: ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value.trimStart()
+    setTextSearch(value)
+
+    timeoutId && clearTimeout(timeoutId)
+    setTimeoutId(setTimeout(() => onSearchTransactions(value), 500))
+  }
+
+  const onClearTextSearch = () => {
+    setTextSearch('')
+    onSearchTransactions('')
+  }
+
+  useEffect(() => {
+    onSearchTransactions(textSearch)
+  }, [defaultData])
 
   const categoriesIcons = categories.reduce((acc, category) => {
     return { ...acc, [category.value]: category }
@@ -61,7 +88,19 @@ export const ViewList = () => {
       <div className={styles.container}>
         <div className={styles.search}>
           <MagnifyingGlass />
-          <input type="text" placeholder="Pesquise pelo nome da transação" />
+          <input
+            type="text"
+            value={textSearch}
+            onChange={onChangeTextSearch}
+            placeholder="Pesquise pelo nome da transação"
+          />
+          <button
+            type="button"
+            onClick={onClearTextSearch}
+            data-state={textSearch === '' ? 'hidden' : 'read'}
+          >
+            <X />
+          </button>
         </div>
 
         <section className={'card ' + styles.list}>

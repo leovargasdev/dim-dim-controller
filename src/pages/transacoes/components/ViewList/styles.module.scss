@@ -30,6 +30,28 @@
       color: var(--text-dark-secondary);
     }
   }
+
+  button {
+    width: 25px;
+    height: 25px;
+    border-radius: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    opacity: 1;
+    transition: all 0.2s;
+
+    &[data-state="hidden"] {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    &:hover {
+      background: rgba(#000000, 0.05);
+    }
+  }
 }
 
 .list {
