@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { CaretDown, CaretUp, Pencil, Trash } from '@phosphor-icons/react'
 
 import { useTransactions } from 'hooks'

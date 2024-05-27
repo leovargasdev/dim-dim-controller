@@ -12,4 +12,6 @@ export const zodTransactionSchema = zod.object({
     .min(1, { message })
     .refine(data => maskNumber(data) > 0, 'Digite um valor válido'),
   category: zod.string().min(1, { message })
+  // tags: zod.array({
+  // })
 })

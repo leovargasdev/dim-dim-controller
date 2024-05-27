@@ -12,6 +12,7 @@ import {
   Input,
   SelectCell
 } from 'components/Form'
+import { InputTags } from './components/InputTags'
 
 import TRANSACTION_TYPES from 'data/transaction-types'
 import { categoriesIn, categoriesOut } from 'data/transaction-categories'
@@ -31,9 +32,10 @@ const NewTransactionPage = () => {
   const categories = type === 'in' ? categoriesIn : categoriesOut
 
   const onSubmit = async (data: FormTransaction): Promise<void> => {
-    await addTransaction(data)
-    useFormMethods.setValue('name', '')
-    useFormMethods.setValue('value', '')
+    console.log(data)
+    // await addTransaction(data)
+    // useFormMethods.setValue('name', '')
+    // useFormMethods.setValue('value', '')
   }
 
   const onChangeCategory = (newCategory: CategoryType) => {
@@ -68,25 +70,25 @@ const NewTransactionPage = () => {
           onSubmit={useFormMethods.handleSubmit(onSubmit)}
         >
           <div className={styles.main}>
-            <div className={styles.header}>
-              <div className={styles.header__inputs}>
-                <SelectCell
-                  name="type"
-                  label="Tipo de transação"
-                  options={TRANSACTION_TYPES}
-                  externalEvent={onChangeType}
-                />
-
+            <div className={styles.inputs_and_calendar}>
+              <div className={styles.inputs}>
                 <Autocomplete
                   type="text"
                   name="name"
-                  label="Descrição"
-                  placeholder="Descrição"
+                  label="Nome"
+                  placeholder="compras no supermercado"
                   onSelected={onSelectAutocomplete}
                   options={transactions.map(t => ({
                     name: t.name,
                     value: t.id
                   }))}
+                />
+
+                <SelectCell
+                  name="type"
+                  label="Tipo de transação"
+                  options={TRANSACTION_TYPES}
+                  externalEvent={onChangeType}
                 />
 
                 <Input
@@ -107,6 +109,8 @@ const NewTransactionPage = () => {
               options={categories}
               label="Categorias"
             />
+
+            <InputTags />
           </div>
 
           <button

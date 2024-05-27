@@ -36,10 +36,15 @@ export interface Transaction extends Base {
   value: number
   created_at: Date
   monthFilter: string
+  tags: string[]
 }
 
 export interface FormTransaction extends Base {
   value: string
+  tags: {
+    id: string
+    name: string
+  }[]
 }
 
 export interface Category {

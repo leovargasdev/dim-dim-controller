@@ -5,5 +5,6 @@ export const defaultValues: FormTransaction = {
   date: new Date(),
   type: 'out',
   category: 'alimentacao',
-  value: ''
+  value: '',
+  tags: []
 }
