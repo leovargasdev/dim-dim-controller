@@ -48,7 +48,7 @@ export const ViewList = () => {
     return { ...acc, [category.value]: category }
   }, {} as Record<CategoryType, Category>)
 
-  console.log('renderizou')
+  console.log('renderizou', transactions)
 
   return (
     <>
@@ -82,13 +82,15 @@ export const ViewList = () => {
           {transactions.map(transaction => {
             const isRevenue = transaction.type === 'in'
             const category = categoriesIcons[transaction.category]
+            const hasTags = !!transaction?.tags?.length
+            // const otherTags = hasTags ? transaction.tags?.slice(1) : []
 
             return (
               <div key={transaction.id} className={styles.item}>
                 <span className={styles.item__type}>
                   <Tooltip text={isRevenue ? 'Receita' : 'Despesa'}>
                     {/* eslint-disable-next-line prettier/prettier */}
-                  {isRevenue ? <CaretUp size={16} weight="bold" fill="var(--green)" /> : <CaretDown size={16} weight="bold" fill="var(--red)" />}
+                    {isRevenue ? <CaretUp size={16} weight="bold" fill="var(--green)" /> : <CaretDown size={16} weight="bold" fill="var(--red)" />}
                   </Tooltip>
                 </span>
 
@@ -105,6 +107,19 @@ export const ViewList = () => {
                     {formatDate(transaction.date, "dd 'de' MMM. (iii)")}
                   </time>
                 </div>
+
+                {hasTags && (
+                  <div className={styles.item__tags}>
+                    <span>{transaction.tags[0]}</span>
+                    {/* {otherTags.length > 0 && (
+                      <span>
+                        <Tooltip text={otherTags.join(',')} sideOffset={12}>
+                          + {otherTags.length}
+                        </Tooltip>
+                      </span>
+                    )} */}
+                  </div>
+                )}
 
                 <span className={styles.item__value}>
                   {convertFloatToCurrency(transaction.value)}

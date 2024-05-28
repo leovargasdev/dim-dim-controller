@@ -14,7 +14,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         ...data,
         date: new Date(data.date),
         created_at: new Date(),
-        value: convertCurrencyToFloat(data.value)
+        value: convertCurrencyToFloat(data.value),
+        tags: data.tags.map(tag => tag.name)
       }
 
       const transactionsCollection = collection(db, DB_NAMES.transactions)

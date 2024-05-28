@@ -32,10 +32,11 @@ const NewTransactionPage = () => {
   const categories = type === 'in' ? categoriesIn : categoriesOut
 
   const onSubmit = async (data: FormTransaction): Promise<void> => {
-    console.log(data)
-    // await addTransaction(data)
-    // useFormMethods.setValue('name', '')
-    // useFormMethods.setValue('value', '')
+    await addTransaction(data)
+
+    useFormMethods.setValue('name', '')
+    useFormMethods.setValue('value', '')
+    useFormMethods.setValue('tags', [])
   }
 
   const onChangeCategory = (newCategory: CategoryType) => {

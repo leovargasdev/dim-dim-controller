@@ -54,6 +54,14 @@
     background: rgba(#F4F4F7, 0.75);
   }
 
+  .item__type {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+  }
+
   .item__icon {
     width: 32px;
     height: 32px;
@@ -72,6 +80,8 @@
   }
 
   .item__info {
+    flex: 1;
+
     strong, time {
       display: block;
       line-height: 1.5;
@@ -89,12 +99,33 @@
     }
   }
 
+  .item__tags {
+    display: flex;
+    column-gap: 8px;
+
+    span {
+      opacity: 0.8;
+      padding: 6px 10px;
+      border-radius: 6px;
+      background: var(--border);
+
+      font-size: 12px;
+      line-height: 1;
+      letter-spacing: 0.3px;
+      color: var(--text-dark);
+      font-weight: 500;
+    }
+  }
+
   .item__value {
     font-size: 16px;
     font-weight: 500;
+    text-align: right;
     color: var(--primary);
 
-    margin-left: auto;
+    width: 90px;
+    // background: blue;
+    margin-left: -8px;
   }
 }
 
