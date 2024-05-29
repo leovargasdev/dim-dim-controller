@@ -11,7 +11,6 @@ export interface TransactionsContextData {
   monthFilter: string
   setMonthFilter: (month: string) => void
   transactions: Transaction[]
-  // transactionsFiltred: Transaction[]
   addTransaction: (transaction: FormTransaction) => Promise<void>
   handleEditTransaction: (transaction: Transaction) => void
   handleRemoveTransaction: (transactionId: string) => void

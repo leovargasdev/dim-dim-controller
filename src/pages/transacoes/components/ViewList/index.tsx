@@ -1,16 +1,17 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { CaretDown, CaretUp, Pencil, Trash } from '@phosphor-icons/react'
 
+import { SearchBar } from '../SearchBar'
+import { IconSearchEmpty } from 'components/SVG'
+import { Tooltip, ModalEditTransaction, ModalGenericAction } from 'components'
+
 import { useTransactions } from 'hooks'
+import { searchValueInArray } from 'utils/array'
 import { categories } from 'data/transaction-categories'
 import { formatDate, convertFloatToCurrency } from 'utils/format'
 import type { Transaction, CategoryType, Category } from 'types/transaction'
-import { Tooltip, ModalEditTransaction, ModalGenericAction } from 'components'
 
 import styles from './styles.module.scss'
-import { SearchBar } from '../SearchBar'
-import { IconSearchEmpty } from 'components/SVG'
-import { searchValueInArray } from 'utils/array'
 
 interface Action {
   type: 'edit' | 'remove' | ''
@@ -21,11 +22,14 @@ export const ViewList = () => {
   const { transactions: defaultTransactions, handleRemoveTransaction } =
     useTransactions()
 
-  const [transactions, setTransactions] =
-    useState<Transaction[]>(defaultTransactions)
+  const [transactions, setTransactions] = useState<Transaction[]>([])
 
   const [loadingRemove, setLoadingRemove] = useState<boolean>(false)
   const [action, setAction] = useState<Action>({ type: '', transaction: null })
+
+  useEffect(() => {
+    setTransactions(defaultTransactions)
+  }, [])
 
   const onCloseAction = () => {
     setAction({ type: '', transaction: null })
@@ -47,8 +51,6 @@ export const ViewList = () => {
   const categoriesIcons = categories.reduce((acc, category) => {
     return { ...acc, [category.value]: category }
   }, {} as Record<CategoryType, Category>)
-
-  console.log('renderizou', transactions)
 
   return (
     <>
@@ -83,7 +85,7 @@ export const ViewList = () => {
             const isRevenue = transaction.type === 'in'
             const category = categoriesIcons[transaction.category]
             const hasTags = !!transaction?.tags?.length
-            // const otherTags = hasTags ? transaction.tags?.slice(1) : []
+            const otherTags = hasTags ? transaction.tags?.slice(1) : []
 
             return (
               <div key={transaction.id} className={styles.item}>
@@ -101,7 +103,6 @@ export const ViewList = () => {
                 </span>
 
                 <div className={styles.item__info}>
-                  {/* <strong>{self.crypto.randomUUID()}</strong> */}
                   <strong>{transaction.name}</strong>
                   <time dateTime={transaction.date as never}>
                     {formatDate(transaction.date, "dd 'de' MMM. (iii)")}
@@ -110,14 +111,26 @@ export const ViewList = () => {
 
                 {hasTags && (
                   <div className={styles.item__tags}>
-                    <span>{transaction.tags[0]}</span>
-                    {/* {otherTags.length > 0 && (
-                      <span>
-                        <Tooltip text={otherTags.join(',')} sideOffset={12}>
+                    <span className={styles.item__tag}>
+                      #{transaction.tags[0]}
+                    </span>
+
+                    {otherTags.length > 0 && (
+                      <Tooltip
+                        text={
+                          <div>
+                            {otherTags.map(tag => (
+                              <p key={tag}>#{tag}</p>
+                            ))}
+                          </div>
+                        }
+                        sideOffset={12}
+                      >
+                        <span className={styles.item__tag}>
                           + {otherTags.length}
-                        </Tooltip>
-                      </span>
-                    )} */}
+                        </span>
+                      </Tooltip>
+                    )}
                   </div>
                 )}
 

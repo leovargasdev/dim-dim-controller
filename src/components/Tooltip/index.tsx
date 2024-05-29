@@ -4,7 +4,7 @@ import * as RadixTooltip from '@radix-ui/react-tooltip'
 import styles from './styles.module.scss'
 
 interface TooltipProps {
-  text: string
+  text: string | React.ReactNode
   sideOffset?: number
   children: React.ReactNode
 }
