@@ -19,9 +19,10 @@ export const InputTags = () => {
   const inputTag = useRef<HTMLInputElement>(null)
 
   const onKeyDownTagName = (event: KeyboardEvent<HTMLInputElement>) => {
+    const isEmptyValue = inputTag.current && inputTag.current.value === ''
     // TODO: Alterar para o evento do enter
-    const isCreateTag = event.code === 'Comma' && inputTag.current
-    if (!isCreateTag) {
+    const isCreateTag = event.code === 'Comma'
+    if (!isCreateTag || isEmptyValue) {
       return
     }
 
@@ -29,7 +30,8 @@ export const InputTags = () => {
       toast.warning('Você atingiu o limite de 5 tags!')
       return
     }
-    const tagName = inputTag.current.value
+
+    const tagName = inputTag?.current?.value
     const hasAlreadyCreated = tags.findIndex(tag => tag.name === tagName)
 
     if (hasAlreadyCreated === -1) {

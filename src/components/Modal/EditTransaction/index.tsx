@@ -40,7 +40,8 @@ export const ModalEditTransaction = ({ transaction, onClose }: Props) => {
       useFormMethods.reset({
         ...transaction,
         value: convertFloatToCurrency(transaction.value) as never,
-        date: formatDate(transaction.date, 'yyyy-MM-dd') as never
+        date: formatDate(transaction.date, 'yyyy-MM-dd') as never,
+        tags: []
       })
     }
   }, [transaction])
@@ -51,7 +52,8 @@ export const ModalEditTransaction = ({ transaction, onClose }: Props) => {
         ...data,
         id: transaction.id,
         value: convertCurrencyToFloat(data.value),
-        date: addHours(new Date(data.date), 3)
+        date: addHours(new Date(data.date), 3),
+        tags: transaction.tags
       } as Transaction
 
       await handleEditTransaction(payload)

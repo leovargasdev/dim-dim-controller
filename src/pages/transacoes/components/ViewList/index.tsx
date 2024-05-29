@@ -22,14 +22,15 @@ export const ViewList = () => {
   const { transactions: defaultTransactions, handleRemoveTransaction } =
     useTransactions()
 
-  const [transactions, setTransactions] = useState<Transaction[]>([])
+  const [transactions, setTransactions] =
+    useState<Transaction[]>(defaultTransactions)
 
   const [loadingRemove, setLoadingRemove] = useState<boolean>(false)
   const [action, setAction] = useState<Action>({ type: '', transaction: null })
 
-  useEffect(() => {
-    setTransactions(defaultTransactions)
-  }, [])
+  // useEffect(() => {
+  //   setTransactions(defaultTransactions)
+  // }, [])
 
   const onCloseAction = () => {
     setAction({ type: '', transaction: null })
