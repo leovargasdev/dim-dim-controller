@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { CaretDown, CaretUp, Pencil, Trash } from '@phosphor-icons/react'
 
 import { SearchBar } from '../SearchBar'
@@ -19,18 +19,11 @@ interface Action {
 }
 
 export const ViewList = () => {
-  const { transactions: defaultTransactions, handleRemoveTransaction } =
-    useTransactions()
-
-  const [transactions, setTransactions] =
-    useState<Transaction[]>(defaultTransactions)
+  const { transactions, handleRemoveTransaction } = useTransactions()
 
   const [loadingRemove, setLoadingRemove] = useState<boolean>(false)
   const [action, setAction] = useState<Action>({ type: '', transaction: null })
-
-  // useEffect(() => {
-  //   setTransactions(defaultTransactions)
-  // }, [])
+  const [search, onSearchTransactions] = useState<string>('')
 
   const onCloseAction = () => {
     setAction({ type: '', transaction: null })
@@ -45,13 +38,15 @@ export const ViewList = () => {
     }
   }
 
-  const onSearchTransactions = (termSearch: string) => {
-    setTransactions(searchValueInArray(defaultTransactions, 'name', termSearch))
-  }
-
   const categoriesIcons = categories.reduce((acc, category) => {
     return { ...acc, [category.value]: category }
   }, {} as Record<CategoryType, Category>)
+
+  const transactionsFiltred: Transaction[] = searchValueInArray(
+    transactions,
+    'name',
+    search
+  )
 
   return (
     <>
@@ -71,7 +66,7 @@ export const ViewList = () => {
       <div className={styles.container}>
         <SearchBar onSearch={onSearchTransactions} />
 
-        {transactions.length === 0 && (
+        {transactionsFiltred.length === 0 && (
           <section className={styles.empty}>
             <IconSearchEmpty />
             <span>
@@ -82,7 +77,7 @@ export const ViewList = () => {
         )}
 
         <section className={'card ' + styles.list}>
-          {transactions.map(transaction => {
+          {transactionsFiltred.map(transaction => {
             const isRevenue = transaction.type === 'in'
             const category = categoriesIcons[transaction.category]
             const hasTags = !!transaction?.tags?.length

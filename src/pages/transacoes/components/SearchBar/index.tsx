@@ -1,8 +1,8 @@
-import { ChangeEvent, useEffect, useState } from 'react'
+import { useTransactions } from 'hooks'
 import { MagnifyingGlass, X } from '@phosphor-icons/react'
+import { ChangeEvent, useEffect, useRef, useState } from 'react'
 
 import styles from './styles.module.scss'
-import { useTransactions } from 'hooks'
 
 interface SearchBarProps {
   onSearch: (value: string) => void
@@ -11,36 +11,35 @@ interface SearchBarProps {
 export const SearchBar = ({ onSearch }: SearchBarProps) => {
   const { transactions } = useTransactions()
 
-  const [textSearch, setTextSearch] = useState<string>('')
+  const refInput = useRef<HTMLInputElement>(null)
+  const searchValue = refInput?.current?.value ?? ''
+
   const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null)
 
   const onChangeTextSearch = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value.trimStart()
-    setTextSearch(value)
 
     timeoutId && clearTimeout(timeoutId)
     setTimeoutId(setTimeout(() => onSearch(value), 500))
   }
 
   const onClearTextSearch = () => {
-    setTextSearch('')
-    onSearch('')
+    if (transactions.length > 0 && searchValue !== '') {
+      // @ts-ignore
+      refInput.current.value = ''
+      onSearch('')
+    }
   }
 
-  // Quando ocorrer alguma ação na transação(Edição/Remoção)
-  // O termo buscado deve ser limpado
-  useEffect(() => {
-    if (transactions.length > 0 && textSearch) {
-      onClearTextSearch()
-    }
-  }, [transactions])
+  // Ao ocorrer alguma alteração na lista de transações(Edição/Remoção), o campo de busca será resetado.
+  useEffect(onClearTextSearch, [transactions])
 
   return (
     <div className={styles.search}>
       <MagnifyingGlass />
       <input
         type="text"
-        value={textSearch}
+        ref={refInput}
         onChange={onChangeTextSearch}
         placeholder="Pesquise pelo nome da transação"
       />
@@ -48,7 +47,7 @@ export const SearchBar = ({ onSearch }: SearchBarProps) => {
         type="button"
         onClick={onClearTextSearch}
         className={styles.button__clear}
-        data-state={textSearch === '' ? 'hidden' : 'read'}
+        data-state={searchValue === '' ? 'hidden' : 'read'}
       >
         <X />
       </button>
