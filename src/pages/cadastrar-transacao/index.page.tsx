@@ -73,7 +73,7 @@ const NewTransactionPage = () => {
                   type="text"
                   name="name"
                   label="Nome"
-                  placeholder="compras no supermercado"
+                  placeholder="Ex: compras no supermercado xxx"
                   onSelected={onSelectAutocomplete}
                   options={transactions.map(t => ({
                     name: t.name,
