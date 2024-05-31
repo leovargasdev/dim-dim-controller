@@ -6,7 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm, FormProvider } from 'react-hook-form'
 
 import { Modal } from 'components'
-import { Input, Select } from 'components/Form'
+import { Input, InputTags, Select } from 'components/Form'
 
 import {
   convertCurrencyToFloat,
@@ -41,7 +41,10 @@ export const ModalEditTransaction = ({ transaction, onClose }: Props) => {
         ...transaction,
         value: convertFloatToCurrency(transaction.value) as never,
         date: formatDate(transaction.date, 'yyyy-MM-dd') as never,
-        tags: []
+        tags: transaction.tags.map((name, index) => ({
+          name,
+          id: index + name
+        }))
       })
     }
   }, [transaction])
@@ -53,7 +56,7 @@ export const ModalEditTransaction = ({ transaction, onClose }: Props) => {
         id: transaction.id,
         value: convertCurrencyToFloat(data.value),
         date: addHours(new Date(data.date), 3),
-        tags: transaction.tags
+        tags: data.tags.map(tag => tag.name)
       } as Transaction
 
       await handleEditTransaction(payload)
@@ -71,7 +74,7 @@ export const ModalEditTransaction = ({ transaction, onClose }: Props) => {
       description="Altere os campos para atualizar a transação"
     >
       <FormProvider {...useFormMethods}>
-        <form onSubmit={useFormMethods.handleSubmit(onSubmit)}>
+        <form>
           <main className={`${styles.main} scroll`}>
             <div className={styles.row}>
               <Select
@@ -107,6 +110,8 @@ export const ModalEditTransaction = ({ transaction, onClose }: Props) => {
 
               <Input type="date" label="Data" name="date" />
             </div>
+
+            <InputTags />
           </main>
 
           <footer className={styles.footer}>
@@ -117,10 +122,11 @@ export const ModalEditTransaction = ({ transaction, onClose }: Props) => {
               Cancelar
             </Dialog.DialogClose>
             <button
-              type="submit"
+              type="button"
               className="button"
               disabled={isLoading}
               data-state={isLoading ? 'loading' : 'read'}
+              onClick={useFormMethods.handleSubmit(onSubmit)}
             >
               Confirmar
             </button>

@@ -26,10 +26,6 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
   const [monthFilter, setMonthFilter] = useState<string>('')
   const [transactions, setTransactions] = useState<Transaction[]>([])
 
-  // const transactionsFiltred = useMemo(() => {
-  //   return transactions.filter(trans => trans.monthFilter === monthFilter)
-  // }, [transactions, monthFilter])
-
   useEffect(() => {
     getTransactions().then(setTransactions)
   }, [])

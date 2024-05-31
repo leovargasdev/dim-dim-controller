@@ -10,9 +10,9 @@ import {
   Autocomplete,
   CalendarPicker,
   Input,
-  SelectCell
+  SelectCell,
+  InputTags
 } from 'components/Form'
-import { InputTags } from './components/InputTags'
 
 import TRANSACTION_TYPES from 'data/transaction-types'
 import { categoriesIn, categoriesOut } from 'data/transaction-categories'
