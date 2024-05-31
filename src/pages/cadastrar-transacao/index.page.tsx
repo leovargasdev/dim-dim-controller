@@ -65,11 +65,7 @@ const NewTransactionPage = () => {
     <section className={styles.container}>
       <h1>Cadastrar transação</h1>
       <FormProvider {...useFormMethods}>
-        <form
-          className="card"
-          style={{ padding: 32 }}
-          onSubmit={useFormMethods.handleSubmit(onSubmit)}
-        >
+        <form className="card" style={{ padding: 32 }}>
           <div className={styles.main}>
             <div className={styles.inputs_and_calendar}>
               <div className={styles.inputs}>
@@ -115,10 +111,11 @@ const NewTransactionPage = () => {
           </div>
 
           <button
-            type="submit"
+            type="button"
             className="button"
             disabled={isLoading}
             data-state={isLoading ? 'loading' : 'read'}
+            onClick={useFormMethods.handleSubmit(onSubmit)}
           >
             Cadastrar transação
           </button>
