@@ -5,7 +5,7 @@ import { useTransactions } from 'hooks'
 import { formatDate } from 'utils/format'
 import { categoriesOut } from 'data/transaction-categories'
 
-import { ChartDoughnut } from 'components'
+import { ChartBar, ChartDoughnut } from 'components'
 import { ViewList, TransactionsHeader } from './components'
 
 import styles from './styles.module.scss'
@@ -54,6 +54,11 @@ const TransactionsPage: NextPage = () => {
           <span>
             <ChartDoughnut items={resumeCategories} />
           </span>
+        </section>
+
+        <section className={'card ' + styles.bar}>
+          <strong>Despesas vs Gastos (mês atual)</strong>
+          <ChartBar />
         </section>
       </div>
     </>
