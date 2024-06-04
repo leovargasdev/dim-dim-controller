@@ -22,6 +22,36 @@
   }
 }
 
+.pagination {
+  display: flex;
+  align-items: center;
+  column-gap: 6px;
+
+  p {
+    flex: 1;
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--text-dark-secondary);
+  }
+
+  button {
+    width: 24px;
+    height: 24px;
+    
+    display: flex;
+
+    svg {
+      margin: auto;
+      fill: var(--text-dark);
+    }
+    
+    &:disabled {
+      opacity: 0.6;
+      fill: var(--text-dark-secondary);
+    }
+  }
+}
+
 .list {
   display: flex;
   flex-direction: column;

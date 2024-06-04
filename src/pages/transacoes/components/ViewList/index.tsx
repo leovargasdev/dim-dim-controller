@@ -1,5 +1,12 @@
 import { useState } from 'react'
-import { CaretDown, CaretUp, Pencil, Trash } from '@phosphor-icons/react'
+import {
+  CaretDown,
+  CaretUp,
+  Pencil,
+  Trash,
+  CaretCircleLeft,
+  CaretCircleRight
+} from '@phosphor-icons/react'
 
 import { SearchBar } from '../SearchBar'
 import { IconSearchEmpty } from 'components/SVG'
@@ -17,6 +24,8 @@ interface Action {
   type: 'edit' | 'remove' | ''
   transaction: Transaction | null
 }
+
+const LENGTH_PAGES = 20
 
 export const ViewList = () => {
   const { transactions, handleRemoveTransaction } = useTransactions()
@@ -48,6 +57,15 @@ export const ViewList = () => {
     search
   )
 
+  const size = transactionsFiltred.length
+  const maxPage = Math.ceil(size / LENGTH_PAGES)
+
+  const [page, setPage] = useState<number>(1)
+
+  const changePage = (direction: number) => {
+    setPage(state => state + direction)
+  }
+
   return (
     <>
       <ModalGenericAction
@@ -76,88 +94,116 @@ export const ViewList = () => {
           </section>
         )}
 
+        <section className={styles.pagination}>
+          <p>
+            {page} de {maxPage} páginas
+          </p>
+          <button
+            type="button"
+            disabled={page === 1}
+            onClick={() => changePage(-1)}
+          >
+            <Tooltip text="voltar">
+              <CaretCircleLeft size={22} />
+            </Tooltip>
+          </button>
+          <button
+            type="button"
+            disabled={page === maxPage}
+            onClick={() => changePage(1)}
+          >
+            <Tooltip text="avançar">
+              <CaretCircleRight size={22} />
+            </Tooltip>
+          </button>
+        </section>
+
         <section className={'card ' + styles.list}>
-          {transactionsFiltred.map(transaction => {
-            const isRevenue = transaction.type === 'in'
-            const category = categoriesIcons[transaction.category]
-            const hasTags = !!transaction?.tags?.length
-            const otherTags = hasTags ? transaction.tags?.slice(1) : []
+          {transactionsFiltred
+            .slice((page - 1) * LENGTH_PAGES, page * LENGTH_PAGES)
+            .map(transaction => {
+              const isRevenue = transaction.type === 'in'
+              const category = categoriesIcons[transaction.category]
+              const hasTags = !!transaction?.tags?.length
+              const otherTags = hasTags ? transaction.tags?.slice(1) : []
 
-            return (
-              <div key={transaction.id} className={styles.item}>
-                <span className={styles.item__type}>
-                  <Tooltip text={isRevenue ? 'Receita' : 'Despesa'}>
-                    {/* eslint-disable-next-line prettier/prettier */}
+              return (
+                <div key={transaction.id} className={styles.item}>
+                  <span className={styles.item__type}>
+                    <Tooltip text={isRevenue ? 'Receita' : 'Despesa'}>
+                      {/* eslint-disable-next-line prettier/prettier */}
                     {isRevenue ? <CaretUp size={16} weight="bold" fill="var(--green)" /> : <CaretDown size={16} weight="bold" fill="var(--red)" />}
-                  </Tooltip>
-                </span>
+                    </Tooltip>
+                  </span>
 
-                <span className={styles.item__icon}>
-                  <Tooltip text={category.name} sideOffset={12}>
-                    {category.icon}
-                  </Tooltip>
-                </span>
+                  <span className={styles.item__icon}>
+                    <Tooltip text={category.name} sideOffset={12}>
+                      {category.icon}
+                    </Tooltip>
+                  </span>
 
-                <div className={styles.item__info}>
-                  <strong>{transaction.name}</strong>
-                  <time dateTime={transaction.date as never}>
-                    {formatDate(transaction.date, "dd 'de' MMM. (iii)")}
-                  </time>
-                </div>
-
-                {hasTags && (
-                  <div className={styles.item__tags}>
-                    <span className={styles.item__tag}>
-                      #{transaction.tags[0]}
-                    </span>
-
-                    {otherTags.length > 0 && (
-                      <Tooltip
-                        text={
-                          <div>
-                            {otherTags.map(tag => (
-                              <p key={tag}>#{tag}</p>
-                            ))}
-                          </div>
-                        }
-                        sideOffset={12}
-                      >
-                        <span className={styles.item__tag}>
-                          + {otherTags.length}
-                        </span>
-                      </Tooltip>
-                    )}
+                  <div className={styles.item__info}>
+                    <strong>{transaction.name}</strong>
+                    <time dateTime={transaction.date as never}>
+                      {formatDate(transaction.date, "dd 'de' MMM. (iii)")}
+                    </time>
                   </div>
-                )}
 
-                <span className={styles.item__value}>
-                  {convertFloatToCurrency(transaction.value)}
-                </span>
+                  {hasTags && (
+                    <div className={styles.item__tags}>
+                      <span className={styles.item__tag}>
+                        #{transaction.tags[0]}
+                      </span>
 
-                <div className={styles.item__actions}>
-                  <Tooltip text="Editar transação">
-                    <button
-                      type="button"
-                      data-type="edit"
-                      onClick={() => setAction({ type: 'edit', transaction })}
-                    >
-                      <Pencil size={14} fill="var(--secondary)" />
-                    </button>
-                  </Tooltip>
+                      {otherTags.length > 0 && (
+                        <Tooltip
+                          text={
+                            <div>
+                              {otherTags.map(tag => (
+                                <p key={tag}>#{tag}</p>
+                              ))}
+                            </div>
+                          }
+                          sideOffset={12}
+                        >
+                          <span className={styles.item__tag}>
+                            + {otherTags.length}
+                          </span>
+                        </Tooltip>
+                      )}
+                    </div>
+                  )}
 
-                  <Tooltip text="Remover transação">
-                    <button
-                      type="button"
-                      data-type="remove"
-                      onClick={() => setAction({ type: 'remove', transaction })}
-                    >
-                      <Trash size={16} fill="var(--secondary)" />
-                    </button>
-                  </Tooltip>
+                  <span className={styles.item__value}>
+                    {convertFloatToCurrency(transaction.value)}
+                  </span>
+
+                  <div className={styles.item__actions}>
+                    <Tooltip text="Editar transação">
+                      <button
+                        type="button"
+                        data-type="edit"
+                        onClick={() => setAction({ type: 'edit', transaction })}
+                      >
+                        <Pencil size={14} fill="var(--secondary)" />
+                      </button>
+                    </Tooltip>
+
+                    <Tooltip text="Remover transação">
+                      <button
+                        type="button"
+                        data-type="remove"
+                        onClick={() =>
+                          setAction({ type: 'remove', transaction })
+                        }
+                      >
+                        <Trash size={16} fill="var(--secondary)" />
+                      </button>
+                    </Tooltip>
+                  </div>
                 </div>
-              </div>
-            )
-          })}
+              )
+            })}
         </section>
       </div>
     </>
