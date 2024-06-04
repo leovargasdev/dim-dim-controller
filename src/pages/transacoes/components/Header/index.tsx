@@ -24,7 +24,7 @@ const daysInWeekly = [
 export const TransactionsHeader = () => {
   const { transactions } = useTransactions()
   const transactionsOutInCurrentMonth = transactions.filter(
-    t => t.monthFilter === currentMonth && t.type === 'out'
+    t => t.type === 'out' && differenceInCalendarDays(today, t.date) <= 30
   )
 
   const resume = useMemo(() => {
@@ -33,6 +33,7 @@ export const TransactionsHeader = () => {
         const { date, value } = transaction
         const { daily, weekly, monthly, lastSevenDays } = acc
         const distance = differenceInCalendarDays(today, date)
+        const isMonth = transaction.monthFilter === currentMonth
 
         if (distance < 7) {
           lastSevenDays[distance] = lastSevenDays[distance] + value
@@ -41,7 +42,7 @@ export const TransactionsHeader = () => {
         return {
           daily: distance === 0 ? daily + value : daily,
           weekly: distance <= 7 ? weekly + value : weekly,
-          monthly: distance <= 30 ? monthly + value : monthly,
+          monthly: isMonth ? monthly + value : monthly,
           lastSevenDays
         }
       },
@@ -66,17 +67,17 @@ export const TransactionsHeader = () => {
 
         <div className={styles.resume}>
           <div className="card">
-            <p>Diário</p>
+            <p>Diário (hoje)</p>
             <strong>{convertFloatToCurrency(resume.daily)}</strong>
           </div>
 
           <div className="card">
-            <p>Semanal</p>
+            <p>Semanal (últimos 7 dias)</p>
             <strong>{convertFloatToCurrency(resume.weekly)}</strong>
           </div>
 
           <div className="card">
-            <p>Mensal</p>
+            <p>Mensal (mês atual)</p>
             <strong>{convertFloatToCurrency(resume.monthly)}</strong>
           </div>
         </div>

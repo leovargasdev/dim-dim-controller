@@ -49,6 +49,8 @@ const TransactionsPage: NextPage = () => {
         <ViewList />
 
         <section className={'card ' + styles.doughnut}>
+          <strong>Gastos por categoria no mês atual</strong>
+
           <span>
             <ChartDoughnut items={resumeCategories} />
           </span>
