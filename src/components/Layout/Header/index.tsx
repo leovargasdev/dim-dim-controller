@@ -7,7 +7,7 @@ import styles from './styles.module.scss'
 const routes = [
   { path: '/transacoes', name: 'Início' },
   { path: '/cadastrar-transacao', name: 'Cadastrar transação' },
-  { path: '/relario', name: 'Relatorios' }
+  { path: '/relatorios', name: 'Relatorios' }
 ]
 
 export const Header = () => {
