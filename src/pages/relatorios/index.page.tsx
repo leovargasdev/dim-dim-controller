@@ -1,7 +1,8 @@
-import { ChartBar } from 'components'
-import { compareAsc, startOfMonth, subMonths } from 'date-fns'
-import { useTransactions } from 'hooks'
 import { useMemo } from 'react'
+import { compareAsc, startOfMonth, subMonths } from 'date-fns'
+
+import { ChartBar } from 'components'
+import { useTransactions } from 'hooks'
 
 import styles from './styles.module.scss'
 
@@ -46,15 +47,18 @@ const ReportsPage = () => {
     return data.reduce(
       (acc, transaction) => {
         const { type, value, monthFilter } = transaction
-        const key = monthFilter.split('-')[0]
+        const month = monthFilter.split('-')[0]
 
-        if (type === 'in') {
-          const total = acc.in[key] ? acc.in[key] + value : value
-          return { out: acc.out, in: { ...acc.in, [key]: total } }
+        const transactionsByType = acc[type]
+        const currentTotal = transactionsByType[month] ?? 0
+
+        return {
+          ...acc,
+          [type]: {
+            ...transactionsByType,
+            [month]: currentTotal + value
+          }
         }
-
-        const total = acc.out[key] ? acc.out[key] + value : value
-        return { in: acc.in, out: { ...acc.out, [key]: total } }
       },
       { in: {} as Record<string, number>, out: {} as Record<string, number> }
     )
@@ -75,13 +79,13 @@ const ReportsPage = () => {
             labels={labels}
             datasets={[
               {
-                data: labels.map(label => totalByMonths.out[label] || 10),
+                data: labels.map(label => totalByMonths.out[label] ?? 0),
                 backgroundColor: 'rgba(255, 99, 132, 0.4)',
                 borderColor: 'rgb(255, 99, 132)',
                 borderWidth: 1
               },
               {
-                data: labels.map(label => totalByMonths.in[label] || 10),
+                data: labels.map(label => totalByMonths.in[label] ?? 0),
                 backgroundColor: 'rgba(53, 162, 235, 0.4)',
                 borderColor: 'rgb(54, 162, 235)',
                 borderWidth: 1
