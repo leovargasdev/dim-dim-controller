@@ -41,22 +41,25 @@ export const ModalEditTransaction = ({ transaction, onClose }: Props) => {
         ...transaction,
         value: convertFloatToCurrency(transaction.value) as never,
         date: formatDate(transaction.date, 'yyyy-MM-dd') as never,
-        tags: transaction.tags.map((name, index) => ({
-          name,
-          id: index + name
-        }))
+        tags:
+          transaction?.tags?.map((name, index) => ({
+            name,
+            id: index + name
+          })) || []
       })
     }
   }, [transaction])
 
   const onSubmit = async (data: FormTransaction): Promise<void> => {
     if (transaction) {
+      const date = addHours(new Date(data.date), 3)
       const payload = {
         ...data,
         id: transaction.id,
         value: convertCurrencyToFloat(data.value),
-        date: addHours(new Date(data.date), 3),
-        tags: data.tags.map(tag => tag.name)
+        tags: data.tags.map(tag => tag.name),
+        date,
+        monthFilter: formatDate(date, 'MMMM-yyyy')
       } as Transaction
 
       await handleEditTransaction(payload)
